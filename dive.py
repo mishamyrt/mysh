@@ -64,10 +64,10 @@ if path.exists(LOCAL_CONFIG_FILE):
 
 host_config = None
 if host is not None and user is None:
-  if (host in config['aliases']):
+  if 'aliases' in config and host in config['aliases']:
     real_name = config['aliases'][host]
     host_config = config['hosts'][real_name]
-  elif (host in config['hosts']):
+  elif host in config['hosts']:
     host_config = config['hosts'][host]
 
 if host_config is None:
