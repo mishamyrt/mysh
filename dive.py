@@ -7,11 +7,12 @@ import os.path
 from os import path
 
 GLOBAL_CONFIG_FILE = os.getenv('HOME') + '/.dive.yaml'
+LOCAL_CONFIG_FILE = './.dive.yaml'
 SELF_PATH = ''
 VERBOSE = False
 
-def load_config():
-  with open(r'.dive.yaml') as file:
+def load_config(file_path):
+  with open(file_path, 'r') as file:
     config = yaml.load(file, Loader=yaml.FullLoader)
     file.close()
     return config
@@ -32,9 +33,9 @@ def connect(host_config):
 
 i = 0
 count = len(sys.argv)
-host = '127.0.0.1'
-user = os.getenv('USER')
-port = '22'
+host = None
+user = None
+port = None
 save = False
 while i < count:
   if i == 0:
@@ -55,9 +56,25 @@ while i < count:
       host = sys.argv[i]
   i += 1
 
-# if (path.exists(GLOBAL_CONFIG_FILE)):
-#   print
-# config = load_config()
-# host_config = config['hosts'][sys.argv[1]]
-# connect(host_config)
+config = {}
+if path.exists(GLOBAL_CONFIG_FILE):
+  config = load_config(GLOBAL_CONFIG_FILE)
+if path.exists(LOCAL_CONFIG_FILE):
+  config.update(load_config(LOCAL_CONFIG_FILE))
 
+host_config = None
+if host is not None and user is None:
+  if (host in config['aliases']):
+    real_name = config['aliases'][host]
+    host_config = config['hosts'][real_name]
+  elif (host in config['hosts']):
+    host_config = config['hosts'][host]
+
+if host_config is None:
+  connect({
+    'host': host or 'localhost',
+    'user': user or os.getenv('USER'),
+    'port': port or '22'
+  })
+else:
+  connect(host_config)
