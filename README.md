@@ -10,3 +10,4 @@ Simple shell on top of the SSH, which will make it easier to use
 - [x] Local configs
 - [ ] Import configs from `.ssh/config` on first start
 - [ ] Config loading from remote repo. `dive get http://...`
+- [ ] namespaces
