@@ -62,7 +62,7 @@ if path.exists(GLOBAL_CONFIG_FILE):
 if path.exists(LOCAL_CONFIG_FILE):
   config.update(load_config(LOCAL_CONFIG_FILE))
 
-host_config = None
+host_config = {}
 if host is not None and user is None:
   if 'aliases' in config and host in config['aliases']:
     real_name = config['aliases'][host]
@@ -70,11 +70,19 @@ if host is not None and user is None:
   elif host in config['hosts']:
     host_config = config['hosts'][host]
 
-if host_config is None:
-  connect({
-    'host': host or 'localhost',
-    'user': user or os.getenv('USER'),
-    'port': port or '22'
-  })
-else:
-  connect(host_config)
+if 'user' not in host_config:
+  if 'user' in config:
+    host_config['user'] = config['user']
+  else:
+    host_config['port'] = os.getenv('USER')
+if 'host' not in host_config:
+  host_config['host'] = '127.0.0.1'
+if 'port' not in host_config:
+  if port is not None:
+    host_config['port'] = port
+  elif 'port' in config:
+    host_config['port'] = config['port']
+  else:
+    host_config['port'] = '22'
+
+connect(host_config)
