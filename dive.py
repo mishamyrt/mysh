@@ -5,11 +5,22 @@ import sys
 import os
 import os.path
 from os import path
+from datetime import date
+import requests
 
-GLOBAL_CONFIG_FILE = os.getenv('HOME') + '/.dive.yaml'
-LOCAL_CONFIG_FILE = './.dive.yaml'
+DIVE_FOLDER = os.getenv('HOME') + '/.local/share/dive'
+GLOBAL_CONFIG_FILE = DIVE_FOLDER + '/global.yaml'
+REMOTES_FOLDER = DIVE_FOLDER + '/remotes'
+REMOTES_CONFIG = DIVE_FOLDER + '/remotes.yaml'
+LOCAL_CONFIG_FILE = '.dive.yaml'
 SELF_PATH = ''
 VERBOSE = False
+
+def update_configs():
+  remotes_config_file = open(REMOTES_CONFIG, 'r+')
+  remotes_config = yaml.load(remotes_config_file, Loader=yaml.FullLoader)
+  for config_url in remotes_config:
+    get_config(config_url)
 
 def load_config(file_path):
   with open(file_path, 'r') as file:
@@ -17,6 +28,29 @@ def load_config(file_path):
     file.close()
     return config
 
+def get_config(url):
+  f = requests.get(url)
+  config_text = f.text
+  config = yaml.load(config_text, Loader=yaml.FullLoader)
+  config_name = config['namespace']
+  f = open(REMOTES_FOLDER + '/' + config_name + '.yaml', 'w')
+  del config['namespace']
+  yaml.dump(config, f)
+
+def add_config(url):
+  get_config(url)
+  if path.exists(REMOTES_CONFIG):
+    remotes_config_file = open(REMOTES_CONFIG, 'r+')
+    remotes_config = yaml.load(remotes_config_file, Loader=yaml.FullLoader)
+    if url not in remotes_config:
+      remotes_config.append(url)
+  else:
+    remotes_config_file = open(REMOTES_CONFIG, 'x')
+    remotes_config = []
+    remotes_config.append(url)
+    yaml.dump(remotes_config, remotes_config_file)
+  remotes_config_file.close()
+  
 def connect(host_config):
   command = ''
   if 'user' in host_config:
@@ -43,6 +77,15 @@ while i < count:
   elif sys.argv[i] == '-p':
     i += 1
     port = sys.argv[i]
+  elif sys.argv[i] == 'get':
+    i += 1
+    url = sys.argv[i]
+    add_config(url)
+    quit()
+  elif sys.argv[i] == 'update':
+    i += 1
+    update_configs()
+    quit()
   elif sys.argv[i] == '-v':
     VERBOSE = True
   elif sys.argv[i] == '-s':
