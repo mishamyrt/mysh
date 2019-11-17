@@ -6,6 +6,7 @@ import os
 import os.path
 from os import path
 from datetime import date
+from glob import glob 
 import requests
 
 DIVE_FOLDER = os.getenv('HOME') + '/.local/share/dive'
@@ -104,6 +105,10 @@ if path.exists(GLOBAL_CONFIG_FILE):
   config = load_config(GLOBAL_CONFIG_FILE)
 if path.exists(LOCAL_CONFIG_FILE):
   config.update(load_config(LOCAL_CONFIG_FILE))
+
+files = glob(REMOTES_FOLDER + '/*')
+for remote_config in files:
+  config.update(load_config(remote_config))
 
 host_config = {}
 if host is not None and user is None:
