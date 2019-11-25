@@ -1,5 +1,8 @@
 UNAME := $(shell uname)
 
+build: bin/dive-core
+	go build -o bin/dive-core ./src/dive
+
 install:
 	make install_$(UNAME)
 
