@@ -1,8 +1,23 @@
 package types
 
+// NamespaceHostConfig is part of main configuration file
+type NamespaceHostConfig struct {
+	Port, User string `yaml:",omitempty"`
+}
+
+// GlobalConfig is main configuration file struct
+type GlobalConfig struct {
+	Namespaces map[string]NamespaceHostConfig
+}
+
 // Host is basic SSH connection config
 type Host struct {
-	Host string
-	Port string `yaml:",omitempty"`
-	User string `yaml:",omitempty"`
+	Host       string
+	Port, User string `yaml:",omitempty"`
+}
+
+// NamespaceConfig is list of hosts
+type NamespaceConfig struct {
+	Namespace string
+	Hosts     map[string]Host
 }

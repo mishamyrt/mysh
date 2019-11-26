@@ -13,5 +13,8 @@ func getHomeDir() string {
 // DiveDirectory is place, where configs, hosts and remotes are stored
 var DiveDirectory = path.Join(getHomeDir(), ".local", "share", "dive")
 
+// GlobalConfig is the main configuration file
+var GlobalConfig = path.Join(DiveDirectory, "global.yaml")
+
 // HostsDirectory is place, where hosts are stored
 var HostsDirectory = path.Join(DiveDirectory, "hosts")
