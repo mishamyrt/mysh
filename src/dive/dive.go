@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"../hosts"
+	"../ssh"
 )
 
 func main() {
@@ -14,6 +15,11 @@ func main() {
 	case "update":
 		fmt.Println("subcommand 'bar'")
 	default:
-		hosts.GetHosts()
+		host, _ := hosts.MatchHost(os.Args[1])
+		command, err := ssh.BuildSSHCommand(host)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Println(command)
 	}
 }

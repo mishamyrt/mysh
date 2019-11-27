@@ -1,6 +1,7 @@
 package hosts
 
 import (
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"path"
@@ -40,13 +41,42 @@ func readNamespaceHosts(filePath string) types.NamespaceConfig {
 	return config
 }
 
-// GetHosts returns finalized list of hosts
-func GetHosts() {
+func finalizeNamespacedHosts(
+	globalConfig types.GlobalConfig,
+	namespaceConfig types.NamespaceConfig,
+) map[string]types.Host {
+	hosts := make(map[string]types.Host)
+	namespaceName := namespaceConfig.Namespace
+	var fallbackUser = globalConfig.Namespaces[namespaceName].User
+	for hostName, hostConfig := range namespaceConfig.Hosts {
+		if len(hostConfig.User) == 0 && len(fallbackUser) > 0 {
+			hostConfig.User = fallbackUser
+		}
+		hosts[hostName] = hostConfig
+		hosts[namespaceName+":"+hostName] = hostConfig
+	}
+	return hosts
+}
+
+func getHosts() map[string]types.Host {
+	hostMap := make(map[string]types.Host)
 	config := readGlobalConfig(paths.GlobalConfig)
-	fmt.Println(config)
 	hosts, _ := filepath.Glob(path.Join(paths.HostsDirectory, "*"))
 	for _, filePath := range hosts {
 		host := readNamespaceHosts(filePath)
-		fmt.Println(host)
+		namespaceHostMap := finalizeNamespacedHosts(config, host)
+		for key, value := range namespaceHostMap {
+			hostMap[key] = value
+		}
 	}
+	return hostMap
+}
+
+// MatchHost finds requested host in list
+func MatchHost(hostName string) (types.Host, error) {
+	hosts := getHosts()
+	if hostConfig, ok := hosts[hostName]; ok {
+		return hostConfig, nil
+	}
+	return types.Host{Host: ""}, errors.New("Host not found")
 }
