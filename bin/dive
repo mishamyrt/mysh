@@ -1,1 +1,7 @@
 #!/usr/bin/env python
+import os
+import sys
+
+stream = os.popen(os.path.dirname(os.path.realpath(__file__)) + '/dive-core ' + sys.argv[1])
+output = stream.read()
+os.system('ssh ' + output)
