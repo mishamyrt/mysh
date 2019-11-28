@@ -5,13 +5,14 @@ import (
 	"os"
 
 	"../hosts"
+	"../remotes"
 	"../ssh"
 )
 
 func main() {
 	switch os.Args[1] {
 	case "get":
-		fmt.Println("subcommand 'foo'")
+		remotes.DownloadConfig(os.Args[2])
 	case "update":
 		fmt.Println("subcommand 'bar'")
 	default:

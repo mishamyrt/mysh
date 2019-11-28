@@ -1,5 +1,10 @@
 package types
 
+// RemotesList is list with namespace keys and URL values
+type RemotesList struct {
+	Remotes map[string]string
+}
+
 // NamespaceHostConfig is part of main configuration file
 type NamespaceHostConfig struct {
 	Port, User string `yaml:",omitempty"`
