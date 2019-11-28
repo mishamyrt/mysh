@@ -22,5 +22,5 @@ func BuildSSHCommand(hostConfig types.Host) (string, error) {
 	}
 	user := fallbackIfEmpty(hostConfig.User, os.Getenv("USER"))
 	port := fallbackIfEmpty(hostConfig.Port, "22")
-	return fmt.Sprintf("%s@%s -p%s", user, hostConfig.Host, port), nil
+	return fmt.Sprintf("%s@%s -p %s", user, hostConfig.Host, port), nil
 }

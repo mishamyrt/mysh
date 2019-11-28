@@ -52,7 +52,6 @@ func finalizeNamespacedHosts(
 		if len(hostConfig.User) == 0 && len(fallbackUser) > 0 {
 			hostConfig.User = fallbackUser
 		}
-		hosts[hostName] = hostConfig
 		hosts[namespaceName+":"+hostName] = hostConfig
 	}
 	return hosts
@@ -75,6 +74,7 @@ func getHosts() map[string]types.Host {
 // MatchHost finds requested host in list
 func MatchHost(hostName string) (types.Host, error) {
 	hosts := getHosts()
+	fmt.Println(hosts)
 	if hostConfig, ok := hosts[hostName]; ok {
 		return hostConfig, nil
 	}
