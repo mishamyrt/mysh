@@ -24,17 +24,29 @@ func saveRemoteNamespace(namespaceName string, url string) error {
 	return yaml.WriteFile(paths.RemotesList, &remotesList)
 }
 
-// DownloadConfig downloads remote config
-func DownloadConfig(url string) string {
+func downloadConfig(url string) string {
 	var config types.NamespaceConfig
 	data, err := readRemoteFile(url)
 	if err != nil {
 		fmt.Println("Could not download remote configuration file")
 		panic(err)
 	}
-	yaml.Parse(data, &config)
-	namespaceName := config.Namespace
-	writeConfig(namespaceName, data)
+	err = yaml.Parse(data, &config)
+	if err != nil {
+		fmt.Println("Could not parse downloaded configuration file")
+		panic(err)
+	}
+	err = writeConfig(config.Namespace, data)
+	if err != nil {
+		fmt.Println("Could not save downloaded configuration file")
+		panic(err)
+	}
+	return config.Namespace
+}
+
+// GetConfig downloads remote config
+func GetConfig(url string) string {
+	namespaceName := downloadConfig(url)
 	saveRemoteNamespace(namespaceName, url)
 	return namespaceName
 }
