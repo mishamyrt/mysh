@@ -1,5 +1,11 @@
 package types
 
+type HostNameParts struct {
+	User      string
+	Host      string
+	Namespace string
+}
+
 // RemotesList is list with namespace keys and URL values
 type RemotesList struct {
 	Remotes map[string]string

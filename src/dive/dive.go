@@ -22,6 +22,12 @@ func main() {
 		for namespace := range remotes.Remotes {
 			fmt.Printf("- %s\n", namespace)
 		}
+	case "namespaces":
+		namespaces := hosts.GetNamespaces()
+		fmt.Println("Namespaces:")
+		for _, namespace := range namespaces {
+			fmt.Printf("- %s\n", namespace)
+		}
 	default:
 		host, err := hosts.MatchHost(os.Args[1])
 		if err != nil {

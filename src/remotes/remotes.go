@@ -80,14 +80,3 @@ func readRemoteFile(url string) ([]byte, error) {
 	body, err := ioutil.ReadAll(resp.Body)
 	return body, err
 }
-
-// Create the file
-// out, err := os.Create(filepath)
-// if err != nil {
-// 	return "", err
-// }
-// defer out.Close()
-
-// // Write the body to file
-// _, err = io.Copy(out, resp.Body)
-// return "", err
