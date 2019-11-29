@@ -3,27 +3,17 @@ package hosts
 import (
 	"errors"
 	"fmt"
-	"io/ioutil"
 	"path"
 	"path/filepath"
 
 	"../paths"
 	"../types"
-	"gopkg.in/yaml.v2"
+	"../yaml"
 )
-
-func readYaml(filePath string, storage interface{}) error {
-	dat, err := ioutil.ReadFile(filePath)
-	if err != nil {
-		return err
-	}
-	err = yaml.Unmarshal(dat, *&storage)
-	return err
-}
 
 func readGlobalConfig(filePath string) types.GlobalConfig {
 	var config types.GlobalConfig
-	err := readYaml(filePath, &config)
+	err := yaml.ReadFile(filePath, &config)
 	if err != nil {
 		fmt.Println("Error: cannot read config file")
 		panic(err)
@@ -33,7 +23,7 @@ func readGlobalConfig(filePath string) types.GlobalConfig {
 
 func readNamespaceHosts(filePath string) types.NamespaceConfig {
 	var config types.NamespaceConfig
-	err := readYaml(filePath, &config)
+	err := yaml.ReadFile(filePath, &config)
 	if err != nil {
 		fmt.Println("Error: cannot read hosts file")
 		panic(err)

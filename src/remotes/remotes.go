@@ -8,16 +8,12 @@ import (
 
 	"../paths"
 	"../types"
-	"gopkg.in/yaml.v2"
+	"../yaml"
 )
 
 func saveRemoteNamespace(namespaceName string, url string) error {
 	var remotesList types.RemotesList
-	dat, err := ioutil.ReadFile(paths.RemotesList)
-	if err != nil {
-		return err
-	}
-	err = yaml.Unmarshal(dat, &remotesList)
+	err := yaml.ReadFile(paths.RemotesList, &remotesList)
 	if err != nil {
 		return err
 	}
@@ -25,22 +21,22 @@ func saveRemoteNamespace(namespaceName string, url string) error {
 		return nil
 	}
 	remotesList.Remotes[namespaceName] = url
-	data, err := yaml.Marshal(&remotesList)
-	err = ioutil.WriteFile(paths.RemotesList, data, 0644)
-	return err
+	return yaml.WriteFile(paths.RemotesList, &remotesList)
 }
 
-func DownloadConfig(url string) {
+// DownloadConfig downloads remote config
+func DownloadConfig(url string) string {
 	var config types.NamespaceConfig
 	data, err := readRemoteFile(url)
 	if err != nil {
 		fmt.Println("Could not download remote configuration file")
 		panic(err)
 	}
-	yaml.Unmarshal(data, &config)
+	yaml.Parse(data, &config)
 	namespaceName := config.Namespace
 	writeConfig(namespaceName, data)
 	saveRemoteNamespace(namespaceName, url)
+	return namespaceName
 }
 
 func writeConfig(namespaceName string, content []byte) error {

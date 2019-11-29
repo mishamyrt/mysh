@@ -5,6 +5,9 @@ all: build
 build: 
 	go build -ldflags="-s -w" -o bin/dive-core ./src/dive
 
+compress:
+	upx --brute bin/dive-core
+
 install:
 	make install_$(UNAME)
 

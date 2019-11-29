@@ -12,7 +12,8 @@ import (
 func main() {
 	switch os.Args[1] {
 	case "get":
-		remotes.DownloadConfig(os.Args[2])
+		namespaceName := remotes.DownloadConfig(os.Args[2])
+		fmt.Printf("'%s' config successfully added", namespaceName)
 	case "update":
 		fmt.Println("subcommand 'bar'")
 	default:
