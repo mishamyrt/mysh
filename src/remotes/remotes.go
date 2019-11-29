@@ -16,8 +16,12 @@ func UpdateRemotes() {
 	remotes := GetRemotes()
 	for namespace, url := range remotes.Remotes {
 		// TODO: Handle namespace change
-		downloadConfig(url)
-		fmt.Printf("'%s' is updated\n", namespace)
+		_, err := downloadConfig(url)
+		if err != nil {
+			fmt.Printf("Could not update '%s'\n", namespace)
+		} else {
+			fmt.Printf("'%s' is updated\n", namespace)
+		}
 	}
 }
 
@@ -41,31 +45,34 @@ func saveRemoteNamespace(namespaceName string, url string) error {
 	return yaml.WriteFile(paths.RemotesList, &remotesList)
 }
 
-func downloadConfig(url string) string {
+func downloadConfig(url string) (string, error) {
 	var config types.NamespaceConfig
 	data, err := readRemoteFile(url)
 	if err != nil {
 		fmt.Println("Could not download remote configuration file")
-		panic(err)
+		return "", err
 	}
 	err = yaml.Parse(data, &config)
 	if err != nil {
 		fmt.Println("Could not parse downloaded configuration file")
-		panic(err)
+		return "", err
 	}
 	err = writeConfig(config.Namespace, data)
 	if err != nil {
 		fmt.Println("Could not save downloaded configuration file")
-		panic(err)
+		return "", err
 	}
-	return config.Namespace
+	return config.Namespace, nil
 }
 
 // GetConfig downloads remote config
-func GetConfig(url string) string {
-	namespaceName := downloadConfig(url)
+func GetConfig(url string) (string, error) {
+	namespaceName, err := downloadConfig(url)
+	if err != nil {
+		return "", err
+	}
 	saveRemoteNamespace(namespaceName, url)
-	return namespaceName
+	return namespaceName, err
 }
 
 func writeConfig(namespaceName string, content []byte) error {

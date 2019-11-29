@@ -12,7 +12,10 @@ import (
 func main() {
 	switch os.Args[1] {
 	case "get":
-		namespaceName := remotes.GetConfig(os.Args[2])
+		namespaceName, err := remotes.GetConfig(os.Args[2])
+		if err != nil {
+			return
+		}
 		fmt.Printf("'%s' config successfully added\n", namespaceName)
 	case "update":
 		remotes.UpdateRemotes()
