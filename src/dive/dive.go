@@ -23,7 +23,11 @@ func main() {
 			fmt.Printf("- %s\n", namespace)
 		}
 	default:
-		host, _ := hosts.MatchHost(os.Args[1])
+		host, err := hosts.MatchHost(os.Args[1])
+		if err != nil {
+			fmt.Println("Host not found")
+			return
+		}
 		command, err := ssh.BuildSSHCommand(host)
 		if err != nil {
 			panic(err)
