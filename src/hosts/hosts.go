@@ -2,6 +2,7 @@ package hosts
 
 import (
 	"fmt"
+	"os"
 	"path"
 	"path/filepath"
 	"strings"
@@ -80,11 +81,28 @@ func getHostNameParts(hostName string) types.HostNameParts {
 	return parts
 }
 
+// getLocalConfig loads the local configuration file
+// with aliases
+func getLocalConfig() (types.LocalConfig, error) {
+	var localConfig types.LocalConfig
+	if _, err := os.Stat(".dive.yaml"); os.IsNotExist(err) {
+		return localConfig, err
+	}
+	err := yaml.ReadFile(".dive.yaml", &localConfig)
+	return localConfig, err
+}
+
 // MatchHost finds requested host in list
 func MatchHost(hostName string) types.Host {
 	var hostNamePart = getHostNameParts(hostName)
 	var hostConfig types.Host
 	hosts, namespaces := getHosts()
+	localConfig, err := getLocalConfig()
+	if err == nil {
+		if replace, ok := localConfig.Aliases[hostNamePart.Host]; ok {
+			hostNamePart.Host = replace
+		}
+	}
 	if len(hostNamePart.Namespace) > 0 {
 		if config, ok := hosts[hostNamePart.Namespace+":"+hostNamePart.Host]; ok {
 			hostConfig = config

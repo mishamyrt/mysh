@@ -21,6 +21,11 @@ type GlobalConfig struct {
 	Namespaces map[string]NamespaceHostConfig
 }
 
+// LocalConfig is local configuration file with aliases
+type LocalConfig struct {
+	Aliases map[string]string
+}
+
 // Host is basic SSH connection config
 type Host struct {
 	Host       string
