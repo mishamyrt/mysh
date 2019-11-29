@@ -1,7 +1,6 @@
 package hosts
 
 import (
-	"errors"
 	"fmt"
 	"path"
 	"path/filepath"
@@ -82,11 +81,9 @@ func getHostNameParts(hostName string) types.HostNameParts {
 }
 
 // MatchHost finds requested host in list
-func MatchHost(hostName string) (types.Host, error) {
+func MatchHost(hostName string) types.Host {
 	var hostNamePart = getHostNameParts(hostName)
 	var hostConfig types.Host
-	emptyHost := types.Host{Host: ""}
-	noHostError := errors.New("Host not found")
 	hosts, namespaces := getHosts()
 	if len(hostNamePart.Namespace) > 0 {
 		if config, ok := hosts[hostNamePart.Namespace+":"+hostNamePart.Host]; ok {
@@ -99,12 +96,12 @@ func MatchHost(hostName string) (types.Host, error) {
 		}
 	}
 	if len(hostConfig.Host) == 0 {
-		return emptyHost, noHostError
+		hostConfig.Host = hostNamePart.Host
 	}
-	if len(hostConfig.User) > 0 {
+	if len(hostNamePart.User) > 0 {
 		hostConfig.User = hostNamePart.User
 	}
-	return hostConfig, nil
+	return hostConfig
 }
 
 func GetNamespaces() []string {
