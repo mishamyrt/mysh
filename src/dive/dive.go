@@ -19,7 +19,7 @@ func main() {
 	case "remotes":
 		namespaces := remotes.GetNamespaces()
 		fmt.Println("Remote namespaces:")
-		for namespace, _ := range namespaces {
+		for namespace := range namespaces {
 			fmt.Printf("- %s\n", namespace)
 		}
 	default:
