@@ -11,6 +11,17 @@ import (
 	"../yaml"
 )
 
+// GetNamespaces returns list of namespaces
+func GetNamespaces() map[string]string {
+	var remotesList types.RemotesList
+	err := yaml.ReadFile(paths.RemotesList, &remotesList)
+	if err != nil {
+		fmt.Println("Could not read remotes configuration file")
+		panic(err)
+	}
+	return remotesList.Remotes
+}
+
 func saveRemoteNamespace(namespaceName string, url string) error {
 	var remotesList types.RemotesList
 	err := yaml.ReadFile(paths.RemotesList, &remotesList)
