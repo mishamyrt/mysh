@@ -11,6 +11,7 @@ import (
 	"../yaml"
 )
 
+// UpdateRemotes updates all saved remotes configuration files
 func UpdateRemotes() {
 	remotes := GetRemotes()
 	for namespace, url := range remotes.Remotes {
