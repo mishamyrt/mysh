@@ -1,3 +1,12 @@
-# Dive
+<p align="center">
+    <img src="./docs/logo@2x.png" width="208px">
+</p>
 
-Simple shell on top of the SSH, which will make it easier to use
+Dive — wrapper on top of ssh, which allows you to get rid of memory names and manual updating of hosts.
+
+---
+
+## Features
+
+* Hosts repository
+* SSH compatible syntax
