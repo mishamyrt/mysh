@@ -15,11 +15,11 @@ func main() {
 		namespaceName := remotes.GetConfig(os.Args[2])
 		fmt.Printf("'%s' config successfully added\n", namespaceName)
 	case "update":
-		fmt.Println("subcommand 'bar'")
+		remotes.UpdateRemotes()
 	case "remotes":
-		namespaces := remotes.GetNamespaces()
+		remotes := remotes.GetRemotes()
 		fmt.Println("Remote namespaces:")
-		for namespace := range namespaces {
+		for namespace := range remotes.Remotes {
 			fmt.Printf("- %s\n", namespace)
 		}
 	default:

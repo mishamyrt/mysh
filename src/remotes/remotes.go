@@ -11,23 +11,28 @@ import (
 	"../yaml"
 )
 
-// GetNamespaces returns list of namespaces
-func GetNamespaces() map[string]string {
+func UpdateRemotes() {
+	remotes := GetRemotes()
+	for namespace, url := range remotes.Remotes {
+		// TODO: Handle namespace change
+		downloadConfig(url)
+		fmt.Printf("'%s' is updated\n", namespace)
+	}
+}
+
+// GetRemotes returns list of return namespaces
+func GetRemotes() types.RemotesList {
 	var remotesList types.RemotesList
 	err := yaml.ReadFile(paths.RemotesList, &remotesList)
 	if err != nil {
 		fmt.Println("Could not read remotes configuration file")
 		panic(err)
 	}
-	return remotesList.Remotes
+	return remotesList
 }
 
 func saveRemoteNamespace(namespaceName string, url string) error {
-	var remotesList types.RemotesList
-	err := yaml.ReadFile(paths.RemotesList, &remotesList)
-	if err != nil {
-		return err
-	}
+	remotesList := GetRemotes()
 	if _, ok := remotesList.Remotes[namespaceName]; ok {
 		return nil
 	}
