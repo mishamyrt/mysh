@@ -3,22 +3,19 @@ UNAME := $(shell uname)
 all: build
 
 build: 
-	go build -ldflags="-s -w" -o bin/dive-core ./src/dive
+	go build -ldflags="-s -w" -o bin/dive_core ./src/dive
+	upx bin/dive_core
 
 install:
-	rm /usr/local/share/dive/dive-core
-	ln bin/dive-core /usr/local/share/dive/dive-core 
+	make install_$(UNAME)
 
-compress:
-	upx --brute bin/dive-core
+install_Darwin:
+	rm -f /usr/local/bin/dive
+	rm -f /usr/local/bin/dive_core
+	cp -rf bin/dive /usr/local/bin/dive
+	cp -rf bin/dive_core /usr/local/bin/dive_core
+	chmod +x /usr/local/bin/dive
 
-# install:
-# 	make install_$(UNAME)
-
-# install_Darwin:
-# 	cp ./src/dive.py /usr/local/bin/dive
-# 	chmod +x /usr/local/bin/dive
-
-# install_Linux:
-# 	cp ./src/dive.py /usr/bin/dive
-# 	chmod +x /usr/bin/dive
+install_Linux:
+	cp ./src/dive.py /usr/bin/dive
+	chmod +x /usr/bin/dive
