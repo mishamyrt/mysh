@@ -7,4 +7,4 @@ output = stream.read()
 if ('ssh ' in output):
     os.system(output)
 else:
-    print(output)
+    print(output.rstrip("\n"))
