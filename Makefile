@@ -29,6 +29,12 @@ install_Darwin:
 	cp -rf dist/macOS/dive_core /usr/local/bin/dive_core
 	make chmod_unix
 
+install_fish:
+	mkdir -p ~/.config/fish/completions
+	cp completions/dive.fish ~/.config/fish/completions
+	chmod +x ~/.config/fish/completions/dive.fish
+
+
 chmod_unix:
 	chmod +x /usr/local/bin/dive_core
 	chmod +x /usr/local/bin/dive
