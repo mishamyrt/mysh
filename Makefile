@@ -24,12 +24,21 @@ install:
 	make install_$(UNAME)
 
 install_Darwin:
-	rm -f /usr/local/bin/dive
-	rm -f /usr/local/bin/dive_core
-	cp -rf bin/dive /usr/local/bin/dive
-	cp -rf bin/dive_core /usr/local/bin/dive_core
+	make uninstall_unix
+	cp -rf bin/dive_unix /usr/local/bin/dive
+	cp -rf dist/macOS/dive_core /usr/local/bin/dive_core
+	make chmod_unix
+
+chmod_unix:
+	chmod +x /usr/local/bin/dive_core
 	chmod +x /usr/local/bin/dive
 
+uninstall_unix:
+	rm -f /usr/local/bin/dive
+	rm -f /usr/local/bin/dive_core
+
 install_Linux:
-	cp ./src/dive.py /usr/bin/dive
-	chmod +x /usr/bin/dive
+	make uninstall_unix
+	cp -rf bin/dive_unix /usr/local/bin/dive
+	cp -rf dist/linux64/dive_core /usr/local/bin/dive_core
+	make chmod_unix
