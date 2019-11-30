@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"../types"
+	"github.com/mishamyrt/dive/v1/pkg/types"
 )
 
 func fallbackIfEmpty(value string, fallback string) string {

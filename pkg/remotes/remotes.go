@@ -8,7 +8,7 @@ import (
 
 	"github.com/mishamyrt/dive/v1/pkg/paths"
 	"github.com/mishamyrt/dive/v1/pkg/types"
-	"github.com/mishamyrt/dive/v1/pkg/hosts"
+	"github.com/mishamyrt/dive/v1/pkg/yaml"
 )
 
 // UpdateRemotes updates all saved remotes configuration files

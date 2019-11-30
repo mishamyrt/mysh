@@ -3,7 +3,7 @@ UNAME := $(shell uname)
 all: build
 
 build: 
-	go build -ldflags="-s -w" -o bin/dive_core ./src/dive
+	go build -ldflags="-s -w" -o bin/dive_core ./dive.go
 	upx bin/dive_core
 
 install:
