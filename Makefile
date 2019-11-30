@@ -25,7 +25,7 @@ install:
 
 install_Darwin:
 	make uninstall_unix
-	cp -rf bin/dive_unix /usr/local/bin/dive
+	cp -rf cmd/dive_unix /usr/local/bin/dive
 	cp -rf dist/macOS/dive_core /usr/local/bin/dive_core
 	make chmod_unix
 
@@ -39,6 +39,6 @@ uninstall_unix:
 
 install_Linux:
 	make uninstall_unix
-	cp -rf bin/dive_unix /usr/local/bin/dive
+	cp -rf cmd/dive_unix /usr/local/bin/dive
 	cp -rf dist/linux64/dive_core /usr/local/bin/dive_core
 	make chmod_unix
