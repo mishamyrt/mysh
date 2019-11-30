@@ -13,3 +13,4 @@ and this project adheres to [Semantic Versioning][].
 -   Remote Hosts update
 -   SSH connect
 -   Local aliases
+-   Bash and Fish complitions
