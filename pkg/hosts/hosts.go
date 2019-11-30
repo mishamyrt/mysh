@@ -2,6 +2,7 @@ package hosts
 
 import (
 	"fmt"
+	"io/ioutil"
 	"os"
 	"path"
 	"path/filepath"
@@ -48,13 +49,29 @@ func finalizeNamespacedHosts(
 	return hosts
 }
 
-func getHosts() (map[string]types.Host, []string) {
+// BuildComplitionList builds and saves list for shell completion
+func BuildComplitionList() error {
+	hosts, _ := GetHosts(false)
+	var complitions string
+	for hostName := range hosts {
+		complitions += hostName + " "
+	}
+	return ioutil.WriteFile(paths.CompletionList, []byte(complitions), 0644)
+}
+
+// GetHosts returns final map of hosts
+func GetHosts(stripOrig bool) (map[string]types.Host, []string) {
 	hostMap := make(map[string]types.Host)
 	config := readGlobalConfig(paths.GlobalConfig)
 	hosts, _ := filepath.Glob(path.Join(paths.HostsDirectory, "*"))
 	var namespaces []string
 	for _, filePath := range hosts {
 		host := readNamespaceHosts(filePath)
+		if stripOrig == false {
+			for key, value := range host.Hosts {
+				hostMap[key] = value
+			}
+		}
 		namespaces = append(namespaces, host.Namespace)
 		namespaceHostMap := finalizeNamespacedHosts(config, host)
 		for key, value := range namespaceHostMap {
@@ -96,7 +113,7 @@ func getLocalConfig() (types.LocalConfig, error) {
 func MatchHost(hostName string) types.Host {
 	var hostNamePart = getHostNameParts(hostName)
 	var hostConfig types.Host
-	hosts, namespaces := getHosts()
+	hosts, namespaces := GetHosts(true)
 	localConfig, err := getLocalConfig()
 	if err == nil {
 		if replace, ok := localConfig.Aliases[hostNamePart.Host]; ok {
@@ -123,6 +140,6 @@ func MatchHost(hostName string) types.Host {
 }
 
 func GetNamespaces() []string {
-	_, namespaces := getHosts()
+	_, namespaces := GetHosts(true)
 	return namespaces
 }

@@ -17,8 +17,16 @@ func main() {
 			return
 		}
 		fmt.Printf("'%s' config successfully added\n", namespaceName)
+		err = hosts.BuildComplitionList()
+		if err != nil {
+			fmt.Println("Could not update shell complition")
+		}
 	case "update":
 		remotes.UpdateRemotes()
+		err := hosts.BuildComplitionList()
+		if err != nil {
+			fmt.Println("Could not update shell complition")
+		}
 	case "remotes":
 		remotes := remotes.GetRemotes()
 		fmt.Println("Remote namespaces:")
