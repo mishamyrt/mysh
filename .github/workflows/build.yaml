@@ -1,0 +1,25 @@
+name: Build `dev` image
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+
+    - name: Install dependencies
+      run: sudo apt install upx
+
+    - name: Build
+      run: make
+
+    - name: Upload results
+      uses: actions/upload-artifact@v1
+      with:
+        name: linux64
+        path: bin/
