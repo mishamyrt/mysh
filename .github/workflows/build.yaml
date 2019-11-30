@@ -1,4 +1,4 @@
-name: Build `dev` image
+name: Build binaries
 
 on:
   push:
@@ -16,10 +16,10 @@ jobs:
       run: sudo apt install upx
 
     - name: Build
-      run: make
+      run: make build_all
 
     - name: Upload results
       uses: actions/upload-artifact@v1
       with:
-        name: linux64
-        path: bin/
+        name: dist
+        path: dist/

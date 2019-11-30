@@ -1,10 +1,24 @@
 UNAME := $(shell uname)
+LD_FLAGS=-s -w
+BUILD_CMD=go build -ldflags="$(LD_FLAGS)"
 
 all: build
 
-build: 
-	go build -ldflags="-s -w" -o bin/dive_core ./dive.go
-	upx bin/dive_core
+build_all: build_Darwin build_Linux
+
+build:
+	mkdir -p dist
+	mkdir -p dist/macOS
+	mkdir -p dist/linux64
+	make build_$(UNAME)
+
+build_Darwin:
+	env GOOS=darwin GOARCH=amd64 $(BUILD_CMD) -o dist/macOS/dive_core ./dive.go
+	upx dist/macOS/dive_core
+
+build_Linux:
+	env GOOS=linux GOARCH=amd64 $(BUILD_CMD) -o dist/linux64/dive_core ./dive.go
+	upx dist/linux64/dive_core
 
 install:
 	make install_$(UNAME)
