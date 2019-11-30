@@ -16,7 +16,7 @@ func main() {
 		if err != nil {
 			return
 		}
-		fmt.Printf("'%s' config successfully added\n", namespaceName)
+		fmt.Printf("'%s' repository successfully added\n", namespaceName)
 		err = hosts.BuildComplitionList()
 		if err != nil {
 			fmt.Println("Could not update shell complition")
@@ -38,6 +38,12 @@ func main() {
 		fmt.Println("Namespaces:")
 		for _, namespace := range namespaces {
 			fmt.Printf("- %s\n", namespace)
+		}
+	case "hosts":
+		hosts, _ := hosts.GetHosts(true)
+		fmt.Println("Hosts:")
+		for host := range hosts {
+			fmt.Printf("- %s\n", host)
 		}
 	default:
 		host := hosts.MatchHost(os.Args[1])
