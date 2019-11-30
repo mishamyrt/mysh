@@ -6,9 +6,9 @@ import (
 	"net/http"
 	"path"
 
-	"../paths"
-	"../types"
-	"../yaml"
+	"github.com/mishamyrt/dive/v1/pkg/paths"
+	"github.com/mishamyrt/dive/v1/pkg/types"
+	"github.com/mishamyrt/dive/v1/pkg/hosts"
 )
 
 // UpdateRemotes updates all saved remotes configuration files

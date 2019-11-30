@@ -7,9 +7,9 @@ import (
 	"path/filepath"
 	"strings"
 
-	"../paths"
-	"../types"
-	"../yaml"
+	"github.com/mishamyrt/dive/v1/pkg/paths"
+	"github.com/mishamyrt/dive/v1/pkg/types"
+	"github.com/mishamyrt/dive/v1/pkg/yaml"
 )
 
 func readGlobalConfig(filePath string) types.GlobalConfig {
