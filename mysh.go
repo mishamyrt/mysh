@@ -40,7 +40,7 @@ func main() {
 		remotes.UpdateRemotes()
 		err := hosts.BuildCompletionList()
 		if err != nil {
-			fmt.Println("Could not update shell complition")
+			fmt.Println("Could not update shell completion")
 		}
 	case "remotes":
 		remotes := remotes.GetRemotes()
