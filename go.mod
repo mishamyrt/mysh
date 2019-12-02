@@ -1,4 +1,4 @@
-module github.com/mishamyrt/dive/v1
+module github.com/mishamyrt/mysh/v1
 
 go 1.13
 

@@ -13,38 +13,38 @@ build:
 	make build_$(UNAME)
 
 build_Darwin:
-	env GOOS=darwin GOARCH=amd64 $(BUILD_CMD) -o dist/macOS/dive_core ./dive.go
-	upx dist/macOS/dive_core
+	env GOOS=darwin GOARCH=amd64 $(BUILD_CMD) -o dist/macOS/mysh_core ./mysh.go
+	upx dist/macOS/mysh_core
 
 build_Linux:
-	env GOOS=linux GOARCH=amd64 $(BUILD_CMD) -o dist/linux64/dive_core ./dive.go
-	upx dist/linux64/dive_core
+	env GOOS=linux GOARCH=amd64 $(BUILD_CMD) -o dist/linux64/mysh_core ./mysh.go
+	upx dist/linux64/mysh_core
 
 install:
 	make install_$(UNAME)
 
 install_Darwin:
 	make uninstall_unix
-	cp -rf cmd/dive_unix /usr/local/bin/dive
-	cp -rf dist/macOS/dive_core /usr/local/bin/dive_core
+	cp -rf cmd/mysh_unix /usr/local/bin/mysh
+	cp -rf dist/macOS/mysh_core /usr/local/bin/mysh_core
 	make chmod_unix
 
 install_fish:
 	mkdir -p ~/.config/fish/completions
-	cp completions/dive.fish ~/.config/fish/completions
-	chmod +x ~/.config/fish/completions/dive.fish
+	cp completions/mysh.fish ~/.config/fish/completions
+	chmod +x ~/.config/fish/completions/mysh.fish
 
 
 chmod_unix:
-	chmod +x /usr/local/bin/dive_core
-	chmod +x /usr/local/bin/dive
+	chmod +x /usr/local/bin/mysh_core
+	chmod +x /usr/local/bin/mysh
 
 uninstall_unix:
-	rm -f /usr/local/bin/dive
-	rm -f /usr/local/bin/dive_core
+	rm -f /usr/local/bin/mysh
+	rm -f /usr/local/bin/mysh_core
 
 install_Linux:
 	make uninstall_unix
-	cp -rf cmd/dive_unix /usr/local/bin/dive
-	cp -rf dist/linux64/dive_core /usr/local/bin/dive_core
+	cp -rf cmd/mysh_unix /usr/local/bin/mysh
+	cp -rf dist/linux64/mysh_core /usr/local/bin/mysh_core
 	make chmod_unix

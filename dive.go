@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/mishamyrt/dive/v1/pkg/hosts"
-	"github.com/mishamyrt/dive/v1/pkg/remotes"
-	"github.com/mishamyrt/dive/v1/pkg/ssh"
+	"github.com/mishamyrt/mysh/v1/pkg/hosts"
+	"github.com/mishamyrt/mysh/v1/pkg/remotes"
+	"github.com/mishamyrt/mysh/v1/pkg/ssh"
 )
 
 func main() {

@@ -8,9 +8,9 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/mishamyrt/dive/v1/pkg/paths"
-	"github.com/mishamyrt/dive/v1/pkg/types"
-	"github.com/mishamyrt/dive/v1/pkg/yaml"
+	"github.com/mishamyrt/mysh/v1/pkg/paths"
+	"github.com/mishamyrt/mysh/v1/pkg/types"
+	"github.com/mishamyrt/mysh/v1/pkg/yaml"
 )
 
 func readGlobalConfig(filePath string) types.GlobalConfig {
@@ -102,10 +102,10 @@ func getHostNameParts(hostName string) types.HostNameParts {
 // with aliases
 func getLocalConfig() (types.LocalConfig, error) {
 	var localConfig types.LocalConfig
-	if _, err := os.Stat(".dive.yaml"); os.IsNotExist(err) {
+	if _, err := os.Stat(".mysh.yaml"); os.IsNotExist(err) {
 		return localConfig, err
 	}
-	err := yaml.ReadFile(".dive.yaml", &localConfig)
+	err := yaml.ReadFile(".mysh.yaml", &localConfig)
 	return localConfig, err
 }
 

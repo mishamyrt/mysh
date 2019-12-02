@@ -1,10 +1,6 @@
-<p align="center">
-    <img src="./docs/logo@2x.png" width="208px">
-</p>
+Mys(s)h — wrapper over SSH, which helps not to clog your head with unnecessary things. In Mysh, you can specify a remote repository with SSH hosts and connect to it by knowing only the name. If the host address changes, you don't have to edit the configuration manually, just update from the repository.
 
-Dive — wrapper over SSH, which helps not to clog your head with unnecessary things. In Dive, you can specify a remote repository with SSH hosts and connect to it by knowing only the name. If the host address changes, you don't have to edit the configuration manually, just update from the repository.
-
-<img src="https://github.com/mishamyrt/dive/workflows/Build%20binaries/badge.svg" alt="Build status">
+<img src="https://github.com/mishamyrt/mysh/workflows/Build%20binaries/badge.svg" alt="Build status">
 
 ## Features
 
@@ -14,17 +10,17 @@ Dive — wrapper over SSH, which helps not to clog your head with unnecessary th
 
 ## How to use
 
-First of all, add the host repository to the dive.
+First of all, add the host repository to the mysh.
 
 ```sh
-$ dive get https://yourcompany.com/hosts/dive.yaml
+$ mysh get https://yourcompany.com/hosts/mysh.yaml
 'yourcompany' config successfully added
 ```
 
 Now use the `hosts` command to see a list of all available hosts.
 
 ```sh
-$ dive hosts
+$ mysh hosts
 - yourcompany:mercury
 - yourcompany:may
 - yourcompany:deacon
@@ -33,19 +29,19 @@ $ dive hosts
 As you can see, all the hosts are prefixed with the namespace. You can enter a hostname with or without a namespace. Usually you need a namespace to avoid collisions.
 
 ```sh
-$ dive mercury
+$ mysh mercury
 freddie@mercury:~# 
 ```
 
 To update all your remotes you can use `update` command.
 
 ```sh
-$ dive update
+$ mysh update
 'yourcompany' is updated
 'petproject' is updated
 ```
 
-And now my favorite: you can put the `.dive.yaml` file in the project folder, prescribe host aliases there.
+And now my favorite: you can put the `.mysh.yaml` file in the project folder, prescribe host aliases there.
 
 ```yaml
 aliases:
@@ -55,6 +51,6 @@ aliases:
 Now, being in the folder with this file, you can connect to the host using the alias.
 
 ```sh
-$ dive test
+$ mysh test
 freddie@mercury:~# 
 ```

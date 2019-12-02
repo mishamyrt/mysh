@@ -1,7 +1,7 @@
 #/usr/bin/env bash
-_dive_completions()
+_mysh_completions()
 {
-  COMPREPLY=($(compgen -W "$(cat $HOME/.local/share/dive/completion)" -- "${COMP_WORDS[1]}"))
+  COMPREPLY=($(compgen -W "$(cat $HOME/.local/share/mysh/completion)" -- "${COMP_WORDS[1]}"))
 }
 
-complete -F _dive_completions dive
+complete -F _mysh_completions mysh
