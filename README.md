@@ -37,6 +37,14 @@ $ mysh mercury
 freddie@mercury:~# 
 ```
 
+There is `show` command, that prints information about the host.
+
+```sh
+$ mysh show mercury
+Host: 10.10.9.5
+User: freddie
+```
+
 To update all your remotes you can use `update` command.
 
 ```sh
