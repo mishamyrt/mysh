@@ -60,6 +60,18 @@ func main() {
 		for host := range hosts {
 			fmt.Printf("- %s\n", host)
 		}
+	case "show":
+		host, err := hosts.MatchHost(os.Args[2], true)
+		if err != nil {
+			fmt.Println("Host not found")
+		}
+		fmt.Println("Host:", host.Host)
+		if len(host.User) > 0 {
+			fmt.Println("User:", host.User)
+		}
+		if len(host.Port) > 0 {
+			fmt.Println("Port:", host.Port)
+		}
 	case "version":
 		w := tabwriter.NewWriter(os.Stdout, 14, 1, 1, ' ', 0)
 		fmt.Fprintf(w, "Version:\t%s\n", Version)
@@ -67,7 +79,7 @@ func main() {
 		fmt.Fprintf(w, "Built:\t%s\n", BuildTime)
 		w.Flush()
 	default:
-		host := hosts.MatchHost(os.Args[1])
+		host, _ := hosts.MatchHost(os.Args[1], false)
 		command, err := ssh.BuildSSHCommand(host)
 		if err != nil {
 			panic(err)

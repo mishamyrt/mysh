@@ -1,6 +1,7 @@
 package hosts
 
 import (
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -110,7 +111,7 @@ func getLocalConfig() (types.LocalConfig, error) {
 }
 
 // MatchHost finds requested host in list
-func MatchHost(hostName string) types.Host {
+func MatchHost(hostName string, strict bool) (types.Host, error) {
 	var hostNamePart = getHostNameParts(hostName)
 	var hostConfig types.Host
 	hosts, namespaces := GetHosts(true)
@@ -131,12 +132,15 @@ func MatchHost(hostName string) types.Host {
 		}
 	}
 	if len(hostConfig.Host) == 0 {
+		if strict {
+			return types.Host{Host: ""}, errors.New("Not found")
+		}
 		hostConfig.Host = hostNamePart.Host
 	}
 	if len(hostNamePart.User) > 0 {
 		hostConfig.User = hostNamePart.User
 	}
-	return hostConfig
+	return hostConfig, nil
 }
 
 func GetNamespaces() []string {
