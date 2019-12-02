@@ -1,13 +1,10 @@
-# Mysh [![Build status][badge-img]][actions]
+# Mysh [![Build status][badge-img]][actions] [![Go Report result][goreport-img]][goreport] 
 
 <img align="right" width="100" height="110"
      alt="Mouse, logo of Mysh"
      src="https://mishamyrt.github.io/mysh/mysh-logo.svg">
 
 Mys(s)h — wrapper over SSH, which helps not to clog your head with unnecessary things. In Mysh, you can specify a remote repository with SSH hosts and connect to it by knowing only the name. If the host address changes, you don't have to edit the configuration manually, just update from the repository.
-
-[badge-img]: https://github.com/mishamyrt/mysh/workflows/Build%20binaries/badge.svg
-[actions]:   https://github.com/mishamyrt/mysh/actions?query=workflow%3A%22Build+binaries%22
 
 ## Features
 
@@ -61,3 +58,8 @@ Now, being in the folder with this file, you can connect to the host using the a
 $ mysh test
 freddie@mercury:~# 
 ```
+
+[actions-badge]:  https://github.com/mishamyrt/mysh/workflows/Build%20binaries/badge.svg
+[actions]:        https://github.com/mishamyrt/mysh/actions?query=workflow%3A%22Build+binaries%22
+[goreport-badge]: https://goreportcard.com/badge/github.com/mishamyrt/mysh
+[goreport]:       https://goreportcard.com/report/github.com/mishamyrt/mysh
