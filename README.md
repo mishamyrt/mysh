@@ -1,4 +1,4 @@
-# Mysh [![Build status][badge-img]][actions] [![Go Report result][goreport-img]][goreport] 
+# Mysh [![Build status][actions-badge]][actions]  [![Go Report result][goreport-badge]][goreport] 
 
 <img align="right" width="100" height="110"
      alt="Mouse, logo of Mysh"
