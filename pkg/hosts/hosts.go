@@ -143,6 +143,7 @@ func MatchHost(hostName string, strict bool) (types.Host, error) {
 	return hostConfig, nil
 }
 
+// GetNamespaces returns list of hosts namespaces
 func GetNamespaces() []string {
 	_, namespaces := GetHosts(true)
 	return namespaces
