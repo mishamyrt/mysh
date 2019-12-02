@@ -1,5 +1,6 @@
 package types
 
+// HostNameParts is the part of host name
 type HostNameParts struct {
 	User      string
 	Host      string
