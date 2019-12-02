@@ -14,3 +14,4 @@ and this project adheres to [Semantic Versioning][].
 -   SSH connect
 -   Local aliases
 -   Bash and Fish complitions
+-   `show` command
