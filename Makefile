@@ -1,6 +1,9 @@
 UNAME := $(shell uname)
-LD_FLAGS=-s -w
-BUILD_CMD=go build -ldflags="$(LD_FLAGS)"
+DATE := $(shell date)
+GIT_COMMIT := $(shell git rev-list -1 HEAD)
+VERSION=0.1.0
+LD_FLAGS=-s -w -X "main.GitCommit=$(GIT_COMMIT)" -X "main.Version=$(VERSION)" -X "main.BuildTime=$(DATE)"
+BUILD_CMD=go build -ldflags='$(LD_FLAGS)'
 
 all: build
 

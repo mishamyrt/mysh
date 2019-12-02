@@ -3,11 +3,26 @@ package main
 import (
 	"fmt"
 	"os"
+	"text/tabwriter"
 
 	"github.com/mishamyrt/mysh/v1/pkg/hosts"
 	"github.com/mishamyrt/mysh/v1/pkg/remotes"
 	"github.com/mishamyrt/mysh/v1/pkg/ssh"
 )
+
+var versionTemplate = `Version:	{{.Version}}
+Git commit:	{{.GitCommit}}
+Built:	{{.BuildTime}}
+{{- end}}`
+
+// GitCommit refers to commit hash at the moment of build
+var GitCommit string
+
+// Version of Mysh
+var Version string
+
+// BuildTime of Mysh
+var BuildTime string
 
 func main() {
 	switch os.Args[1] {
@@ -45,6 +60,12 @@ func main() {
 		for host := range hosts {
 			fmt.Printf("- %s\n", host)
 		}
+	case "version":
+		w := tabwriter.NewWriter(os.Stdout, 14, 1, 1, ' ', 0)
+		fmt.Fprintf(w, "Version:\t%s\n", Version)
+		fmt.Fprintf(w, "GitCommit:\t%s\n", GitCommit)
+		fmt.Fprintf(w, "Built:\t%s\n", BuildTime)
+		w.Flush()
 	default:
 		host := hosts.MatchHost(os.Args[1])
 		command, err := ssh.BuildSSHCommand(host)
