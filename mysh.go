@@ -32,13 +32,13 @@ func main() {
 			return
 		}
 		fmt.Printf("'%s' repository successfully added\n", namespaceName)
-		err = hosts.BuildComplitionList()
+		err = hosts.BuildCompletionList()
 		if err != nil {
-			fmt.Println("Could not update shell complition")
+			fmt.Println("Could not update shell completion")
 		}
 	case "update":
 		remotes.UpdateRemotes()
-		err := hosts.BuildComplitionList()
+		err := hosts.BuildCompletionList()
 		if err != nil {
 			fmt.Println("Could not update shell complition")
 		}

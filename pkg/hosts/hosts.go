@@ -50,8 +50,8 @@ func finalizeNamespacedHosts(
 	return hosts
 }
 
-// BuildComplitionList builds and saves list for shell completion
-func BuildComplitionList() error {
+// BuildCompletionList builds and saves list for shell completion
+func BuildCompletionList() error {
 	hosts, _ := GetHosts(false)
 	var complitions string
 	for hostName := range hosts {
