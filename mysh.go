@@ -19,66 +19,140 @@ var Version string
 // BuildTime of Mysh
 var BuildTime string
 
+func getRemote(args []string) {
+	if len(args) < 3 {
+		fmt.Println("Can't load repository. URL not provided. Usage:")
+		fmt.Println("\tmysh get <url>")
+		return
+	}
+	namespaceName, err := remotes.GetConfig(args[2])
+	if err != nil {
+		return
+	}
+	fmt.Printf("'%s' repository successfully added\n", namespaceName)
+	err = hosts.BuildCompletionList()
+	if err != nil {
+		fmt.Println("Could not update shell completion")
+	}
+}
+
+func printCommands(commands [][]string, writer *tabwriter.Writer) {
+	for _, command := range commands {
+		fmt.Fprintf(writer, "\t%s\t%s\n", command[0], command[1])
+	}
+}
+
+func help() {
+	fmt.Printf("Mysh is a tool for improving SSH user experience\n\n")
+	fmt.Println("Usage:")
+	fmt.Printf("\t mysh <command or host> [arguments]\n\n")
+	fmt.Println("The commands are:")
+	w := tabwriter.NewWriter(os.Stdout, 9, 1, 1, ' ', 0)
+	printCommands([][]string{
+		{"get", "add repository and download hosts from it"},
+		{"help", "print this message and exit"},
+		{"hosts", "display all hosts"},
+		{"namespaces", "display all namespaces"},
+		{"remotes", "display all added remote repositories"},
+		{"show", "display host information"},
+		{"update", "refresh hosts from added remote repositories"},
+		{"version", "print Mysh version"},
+	}, w)
+	w.Flush()
+}
+
+func updateRemotes() {
+	remotes.UpdateRemotes()
+	err := hosts.BuildCompletionList()
+	if err != nil {
+		fmt.Println("Could not update shell completion")
+	}
+}
+
+func printRemotes() {
+	remotes := remotes.GetRemotes()
+	fmt.Println("Remote namespaces:")
+	for namespace := range remotes.Remotes {
+		fmt.Printf("- %s\n", namespace)
+	}
+}
+
+func printNamespaces() {
+	namespaces := hosts.GetNamespaces()
+	fmt.Println("Namespaces:")
+	for _, namespace := range namespaces {
+		fmt.Printf("- %s\n", namespace)
+	}
+}
+
+func printHosts() {
+	hosts, _ := hosts.GetHosts(true)
+	fmt.Println("Hosts:")
+	for host := range hosts {
+		fmt.Printf("- %s\n", host)
+	}
+}
+
+func version() {
+	w := tabwriter.NewWriter(os.Stdout, 14, 1, 1, ' ', 0)
+	fmt.Fprintf(w, "Version:\t%s\n", Version)
+	fmt.Fprintf(w, "GitCommit:\t%s\n", GitCommit)
+	fmt.Fprintf(w, "Built:\t%s\n", BuildTime)
+	w.Flush()
+}
+
+func connect(args []string) {
+	host, _ := hosts.MatchHost(args[1], false)
+	command, err := ssh.BuildSSHCommand(host)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(command)
+}
+
+func showHost(args []string) {
+	if len(args) < 3 {
+		fmt.Println("Host not provided. Usage:")
+		fmt.Println("\tmysh show <host>")
+		return
+	}
+	host, err := hosts.MatchHost(os.Args[2], true)
+	if err != nil {
+		fmt.Println("Host not found")
+		return
+	}
+	fmt.Println("Host:", host.Host)
+	if len(host.User) > 0 {
+		fmt.Println("User:", host.User)
+	}
+	if len(host.Port) > 0 {
+		fmt.Println("Port:", host.Port)
+	}
+}
+
 func main() {
+	if len(os.Args) == 1 {
+		help()
+		return
+	}
 	switch os.Args[1] {
 	case "get":
-		namespaceName, err := remotes.GetConfig(os.Args[2])
-		if err != nil {
-			return
-		}
-		fmt.Printf("'%s' repository successfully added\n", namespaceName)
-		err = hosts.BuildCompletionList()
-		if err != nil {
-			fmt.Println("Could not update shell completion")
-		}
+		getRemote(os.Args)
 	case "update":
-		remotes.UpdateRemotes()
-		err := hosts.BuildCompletionList()
-		if err != nil {
-			fmt.Println("Could not update shell completion")
-		}
+		updateRemotes()
+	case "help":
+		help()
 	case "remotes":
-		remotes := remotes.GetRemotes()
-		fmt.Println("Remote namespaces:")
-		for namespace := range remotes.Remotes {
-			fmt.Printf("- %s\n", namespace)
-		}
+		printRemotes()
 	case "namespaces":
-		namespaces := hosts.GetNamespaces()
-		fmt.Println("Namespaces:")
-		for _, namespace := range namespaces {
-			fmt.Printf("- %s\n", namespace)
-		}
+		printNamespaces()
 	case "hosts":
-		hosts, _ := hosts.GetHosts(true)
-		fmt.Println("Hosts:")
-		for host := range hosts {
-			fmt.Printf("- %s\n", host)
-		}
+		printHosts()
 	case "show":
-		host, err := hosts.MatchHost(os.Args[2], true)
-		if err != nil {
-			fmt.Println("Host not found")
-		}
-		fmt.Println("Host:", host.Host)
-		if len(host.User) > 0 {
-			fmt.Println("User:", host.User)
-		}
-		if len(host.Port) > 0 {
-			fmt.Println("Port:", host.Port)
-		}
+		showHost(os.Args)
 	case "version":
-		w := tabwriter.NewWriter(os.Stdout, 14, 1, 1, ' ', 0)
-		fmt.Fprintf(w, "Version:\t%s\n", Version)
-		fmt.Fprintf(w, "GitCommit:\t%s\n", GitCommit)
-		fmt.Fprintf(w, "Built:\t%s\n", BuildTime)
-		w.Flush()
+		version()
 	default:
-		host, _ := hosts.MatchHost(os.Args[1], false)
-		command, err := ssh.BuildSSHCommand(host)
-		if err != nil {
-			panic(err)
-		}
-		fmt.Println(command)
+		connect(os.Args)
 	}
 }
