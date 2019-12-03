@@ -10,11 +10,6 @@ import (
 	"github.com/mishamyrt/mysh/v1/pkg/ssh"
 )
 
-var versionTemplate = `Version:	{{.Version}}
-Git commit:	{{.GitCommit}}
-Built:	{{.BuildTime}}
-{{- end}}`
-
 // GitCommit refers to commit hash at the moment of build
 var GitCommit string
 
