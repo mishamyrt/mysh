@@ -34,6 +34,7 @@ install_Darwin:
 
 install_fish:
 	mkdir -p ~/.config/fish/completions
+	rm -f ~/.config/fish/completions/mysh.fish
 	cp completions/mysh.fish ~/.config/fish/completions
 	chmod +x ~/.config/fish/completions/mysh.fish
 
