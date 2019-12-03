@@ -63,6 +63,7 @@ deb:
 	chmod +x $(DEB_FOLDER)/usr/share/bash-completion/completions/mysh
 	chmod +x $(DEB_FOLDER)/usr/share/fish/vendor_completions.d/mysh
 	dpkg-deb --build $(DEB_FOLDER)
+	mv $(DEB_FOLDER).deb dist/
 
 chmod_unix:
 	chmod +x /usr/local/bin/mysh_core
