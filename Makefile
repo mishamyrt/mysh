@@ -52,7 +52,7 @@ deb:
 	mkdir $(DEB_FOLDER)/usr/local/
 	mkdir $(DEB_FOLDER)/usr/local/bin
 	mkdir $(DEB_FOLDER)/DEBIAN
-	cp dist/linux64/mysh_core $(DEB_FOLDER)/usr/share/mysh
+	cp dist/linux64/mysh_core $(DEB_FOLDER)/usr/share/mysh/core
 	cp cmd/mysh_linux $(DEB_FOLDER)/usr/local/bin/mysh
 	cp debian/control $(DEB_FOLDER)/DEBIAN/control
 	cp debian/postinst $(DEB_FOLDER)/DEBIAN/postinst
