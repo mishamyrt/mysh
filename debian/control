@@ -1,0 +1,8 @@
+Package: mysh
+Version: 0.1-0
+Section: base
+Priority: optional
+Architecture: amd64
+Depends: openssh-client (>= 6.7)
+Maintainer: Mikhael Khrustik <misha@myrt.co>
+Description: Mysh is a tool for improving SSH user experience
