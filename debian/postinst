@@ -5,5 +5,5 @@ mkdir -p $HOME/.local/share/mysh/
 mkdir -p $HOME/.local/share/mysh/hosts
 
 touch $HOME/.local/share/mysh/completion
-echo "remotes:" > $HOME/.local/share/mysh/remotes.yaml
-echo "namespaces:" > $HOME/.local/share/mysh/global.yaml
+echo "remotes: {}" > $HOME/.local/share/mysh/remotes.yaml
+echo "namespaces: {}" > $HOME/.local/share/mysh/global.yaml
