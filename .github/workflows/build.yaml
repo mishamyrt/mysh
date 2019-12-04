@@ -12,11 +12,8 @@ jobs:
     - name: Install dependencies
       run: sudo apt install upx
 
-    - name: Build binaries
-      run: make build_all
-    
-    - name: Build deb package
-      run: make deb
+    - name: Build installers
+      run: make
 
     - name: Upload results
       uses: actions/upload-artifact@v1

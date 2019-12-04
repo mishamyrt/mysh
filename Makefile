@@ -12,7 +12,7 @@ DARWIN_FOLDER=dist/mysh_$(VERSION)_darwin_amd64
 DARWIN_BINARY=$(DARWIN_FOLDER)/core_mysh /usr/local/bin
 LINUX_BINARY=$(DEB_FOLDER)/usr/local/bin/core_mysh
 
-all: build
+all: brew_package deb_package
 
 brew_package: build_darwin
 	mkdir -p $(DARWIN_FOLDER)
