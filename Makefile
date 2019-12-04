@@ -9,7 +9,7 @@ DEB_VERSION=$(shell echo "$(VERSION)" | sed 's/\(.*\)\./\1-/')
 DEB_FOLDER=dist/mysh_$(DEB_VERSION)-amd64
 DARWIN_FOLDER=dist/mysh_$(VERSION)_darwin_amd64
 
-DARWIN_BINARY=$(DARWIN_FOLDER)/core_mysh /usr/local/bin
+DARWIN_BINARY=$(DARWIN_FOLDER)/core_mysh
 LINUX_BINARY=$(DEB_FOLDER)/usr/local/bin/core_mysh
 
 all: brew_package deb_package
