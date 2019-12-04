@@ -2,7 +2,7 @@
 import os
 import sys
 
-core_path = '/usr/share/mysh/core'
+core_path = 'core_mysh'
 stream = os.popen(core_path + ' ' + ' '.join(sys.argv[1:]))
 output = stream.read()
 if ('ssh ' in output):
