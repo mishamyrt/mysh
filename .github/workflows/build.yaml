@@ -1,9 +1,6 @@
 name: Build binaries
 
-on:
-  push:
-    branches:
-      - develop
+on: push
 
 jobs:
   build:
@@ -15,8 +12,11 @@ jobs:
     - name: Install dependencies
       run: sudo apt install upx
 
-    - name: Build
+    - name: Build binaries
       run: make build_all
+    
+    - name: Build deb package
+      run: make deb
 
     - name: Upload results
       uses: actions/upload-artifact@v1
