@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"strings"
 	"text/tabwriter"
 
 	"github.com/mishamyrt/mysh/v1/pkg/hosts"
@@ -49,6 +50,7 @@ func help() {
 	fmt.Println("The commands are:")
 	w := tabwriter.NewWriter(os.Stdout, 9, 1, 1, ' ', 0)
 	printCommands([][]string{
+		{"copy", "copy remote file"},
 		{"get", "add repository and download hosts from it"},
 		{"help", "print this message and exit"},
 		{"hosts", "display all hosts"},
@@ -130,6 +132,39 @@ func showHost(args []string) {
 	}
 }
 
+func getSCPFile(filePath string) (string, error) {
+	if strings.Contains(filePath, ":") {
+		return ssh.BuildSCPPath(hosts.MatchRemoteFile(filePath))
+	}
+	return filePath, nil
+}
+
+func copyFile(args []string) {
+	usage := "\tmysh copy <source host>:<file> <target host>:<file>"
+	var source string
+	var target string
+	if len(args) < 3 {
+		fmt.Println("Source not provided. Usage:")
+		fmt.Println(usage)
+		return
+	} else if len(args) < 4 {
+		fmt.Println("Target not provided. Usage:")
+		fmt.Println(usage)
+		return
+	}
+	source, err := getSCPFile(args[2])
+	if err != nil {
+		fmt.Println("Source host not provided. Usage:")
+		fmt.Println(usage)
+	}
+	target, err = getSCPFile(args[3])
+	if err != nil {
+		fmt.Println("Target host not provided. Usage:")
+		fmt.Println(usage)
+	}
+	fmt.Printf("scp %s %s\n", source, target)
+}
+
 func main() {
 	if len(os.Args) == 1 {
 		help()
@@ -150,6 +185,8 @@ func main() {
 		printHosts()
 	case "show":
 		showHost(os.Args)
+	case "copy":
+		copyFile(os.Args)
 	case "version":
 		version()
 	default:

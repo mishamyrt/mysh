@@ -33,6 +33,12 @@ type Host struct {
 	Port, User string `yaml:",omitempty"`
 }
 
+// RemoteFile is a combination of file path and host
+type RemoteFile struct {
+	Host     Host
+	FilePath string
+}
+
 // NamespaceConfig is list of hosts
 type NamespaceConfig struct {
 	Namespace string

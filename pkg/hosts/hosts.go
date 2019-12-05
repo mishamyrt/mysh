@@ -45,7 +45,7 @@ func finalizeNamespacedHosts(
 		if len(hostConfig.User) == 0 && len(fallbackUser) > 0 {
 			hostConfig.User = fallbackUser
 		}
-		hosts[namespaceName+":"+hostName] = hostConfig
+		hosts[namespaceName+"/"+hostName] = hostConfig
 	}
 	return hosts
 }
@@ -85,8 +85,8 @@ func GetHosts(stripOrig bool) (map[string]types.Host, []string) {
 func getHostNameParts(hostName string) types.HostNameParts {
 	var parts types.HostNameParts
 	restString := hostName
-	if strings.Contains(restString, ":") {
-		namespaceParts := strings.Split(hostName, ":")
+	if strings.Contains(restString, "/") {
+		namespaceParts := strings.Split(hostName, "/")
 		parts.Namespace = namespaceParts[0]
 		restString = namespaceParts[1]
 	}
@@ -110,6 +110,15 @@ func getLocalConfig() (types.LocalConfig, error) {
 	return localConfig, err
 }
 
+// MatchRemoteFile finds requested host with file in list
+func MatchRemoteFile(remoteFilePath string) types.RemoteFile {
+	var remoteFile types.RemoteFile
+	remoteFileParts := strings.Split(remoteFilePath, ":")
+	remoteFile.FilePath = remoteFileParts[1]
+	remoteFile.Host, _ = MatchHost(remoteFileParts[0], false)
+	return remoteFile
+}
+
 // MatchHost finds requested host in list
 func MatchHost(hostName string, strict bool) (types.Host, error) {
 	var hostNamePart = getHostNameParts(hostName)
@@ -122,12 +131,12 @@ func MatchHost(hostName string, strict bool) (types.Host, error) {
 		}
 	}
 	if len(hostNamePart.Namespace) > 0 {
-		if config, ok := hosts[hostNamePart.Namespace+":"+hostNamePart.Host]; ok {
+		if config, ok := hosts[hostNamePart.Namespace+"/"+hostNamePart.Host]; ok {
 			hostConfig = config
 		}
 	}
 	for _, namespace := range namespaces {
-		if config, ok := hosts[namespace+":"+hostNamePart.Host]; ok {
+		if config, ok := hosts[namespace+"/"+hostNamePart.Host]; ok {
 			hostConfig = config
 		}
 	}
