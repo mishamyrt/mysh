@@ -15,3 +15,4 @@ and this project adheres to [Semantic Versioning][].
 -   Local aliases
 -   Bash and Fish complitions
 -   `show` command
+-   `copy` command
