@@ -110,6 +110,15 @@ func getLocalConfig() (types.LocalConfig, error) {
 	return localConfig, err
 }
 
+// MatchRemoteFile finds requested host with file in list
+func MatchRemoteFile(remoteFilePath string) types.RemoteFile {
+	var remoteFile types.RemoteFile
+	remoteFileParts := strings.Split(remoteFilePath, ":")
+	remoteFile.FilePath = remoteFileParts[1]
+	remoteFile.Host, _ = MatchHost(remoteFileParts[0], false)
+	return remoteFile
+}
+
 // MatchHost finds requested host in list
 func MatchHost(hostName string, strict bool) (types.Host, error) {
 	var hostNamePart = getHostNameParts(hostName)
