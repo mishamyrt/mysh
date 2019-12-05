@@ -1,11 +1,11 @@
-VERSION=0.1.0
+VERSION := $(shell cat CHANGELOG.md | grep -m 1 "\#\#"  | cut -d' ' -f2)
 UNAME := $(shell uname)
 DATE := $(shell date)
 GIT_COMMIT := $(shell git rev-list -1 HEAD)
 LD_FLAGS=-s -w -X "main.GitCommit=$(GIT_COMMIT)" -X "main.Version=$(VERSION)" -X "main.BuildTime=$(DATE)"
 BUILD_CMD=go build -ldflags='$(LD_FLAGS)'
 
-DEB_VERSION=$(shell echo "$(VERSION)" | sed 's/\(.*\)\./\1-/')
+DEB_VERSION := $(shell echo "$(VERSION)" | sed 's/\(.*\)\./\1-/')
 DEB_FOLDER=dist/mysh_$(DEB_VERSION)-amd64
 DARWIN_FOLDER=dist/mysh_$(VERSION)_darwin_amd64
 
