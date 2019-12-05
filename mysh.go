@@ -50,6 +50,7 @@ func help() {
 	fmt.Println("The commands are:")
 	w := tabwriter.NewWriter(os.Stdout, 9, 1, 1, ' ', 0)
 	printCommands([][]string{
+		{"copy", "copy remote file"},
 		{"get", "add repository and download hosts from it"},
 		{"help", "print this message and exit"},
 		{"hosts", "display all hosts"},
