@@ -138,7 +138,7 @@ func getSCPFile(filePath string) (string, error) {
 	return filePath, nil
 }
 
-func copy(args []string) {
+func copyFile(args []string) {
 	usage := "\tmysh copy <source host>:<file> <target host>:<file>"
 	var source string
 	var target string
@@ -185,7 +185,7 @@ func main() {
 	case "show":
 		showHost(os.Args)
 	case "copy":
-		copy(os.Args)
+		copyFile(os.Args)
 	case "version":
 		version()
 	default:
