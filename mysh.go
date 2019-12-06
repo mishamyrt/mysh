@@ -7,6 +7,7 @@ import (
 	"text/tabwriter"
 
 	"github.com/mishamyrt/mysh/v1/pkg/hosts"
+	"github.com/mishamyrt/mysh/v1/pkg/paths"
 	"github.com/mishamyrt/mysh/v1/pkg/remotes"
 	"github.com/mishamyrt/mysh/v1/pkg/ssh"
 )
@@ -166,6 +167,7 @@ func copyFile(args []string) {
 }
 
 func main() {
+	paths.PreapreEnvironment()
 	if len(os.Args) == 1 {
 		help()
 		return
