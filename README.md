@@ -2,7 +2,7 @@
 
 <img align="right" width="110" height="122"
      alt="Mouse, logo of Mysh"
-     src="https://mishamyrt.github.io/mysh/logo@2px.png">
+     src="https://mishamyrt.github.io/mysh/logo@2x.png">
 
 Mys(s)h — wrapper over SSH, which helps not to clog your head with unnecessary things. In Mysh, you can specify a remote repository with SSH hosts and connect to it by knowing only the name. If the host address changes, you don't have to edit the configuration manually, just update from the repository.
 
