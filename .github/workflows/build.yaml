@@ -1,0 +1,22 @@
+name: Build binaries
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+
+    - name: Install dependencies
+      run: sudo apt install upx
+
+    - name: Build installers
+      run: make
+
+    - name: Upload results
+      uses: actions/upload-artifact@v1
+      with:
+        name: installers
+        path: dist/
