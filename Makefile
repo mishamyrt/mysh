@@ -1,4 +1,4 @@
-VERSION := $(shell cat CHANGELOG.md | grep -m 1 "\#\#"  | cut -d' ' -f2)
+VERSION := $(shell cat CHANGELOG.md | grep -m 1 "\#\#"  | cut -d' ' -f2 | cut -d "[" -f2 | cut -d "]" -f1)
 UNAME := $(shell uname)
 DATE := $(shell date)
 GIT_COMMIT := $(shell git rev-list -1 HEAD)
