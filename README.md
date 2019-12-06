@@ -12,6 +12,22 @@ Mys(s)h — wrapper over SSH, which helps not to clog your head with unnecessary
 * SSH compatible syntax (partly)
 * Local aliases
 
+## Installation
+
+### Ubuntu/Debian
+
+```sh
+wget https://github.com/mishamyrt/mysh/releases/download/0.1.0beta/mysh_0.1-0beta-amd64.deb
+sudo apt install ./mysh_0.1-0beta-amd64.deb
+```
+
+### macOS
+
+```sh
+brew tap mishamyrt/mysh
+brew install mysh
+```
+
 ## How to use
 
 First of all, add the host repository to the mysh.
