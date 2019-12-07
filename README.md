@@ -83,7 +83,7 @@ $ mysh test
 freddie@mercury:~# 
 ```
 
-[actions-badge]:  https://github.com/mishamyrt/mysh/workflows/Build%20binaries/badge.svg
-[actions]:        https://github.com/mishamyrt/mysh/actions?query=workflow%3A%22Build+binaries%22
+[actions-badge]:  https://github.com/mishamyrt/mysh/workflows/build/badge.svg
+[actions]:        https://github.com/mishamyrt/mysh/actions?query=workflow%3A%22build%22
 [goreport-badge]: https://goreportcard.com/badge/github.com/mishamyrt/mysh
 [goreport]:       https://goreportcard.com/report/github.com/mishamyrt/mysh
