@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning][].
 
 ### Fixed
 
+-   Empty lists handling
 -   Download link
 
 ### Removed
