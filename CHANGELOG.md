@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog][],
 and this project adheres to [Semantic Versioning][].
 
-## [0.1.0][] — Unreleased
+## [0.1.0][] — 2019-12-07
 
 ### Added
 
@@ -39,4 +39,4 @@ and this project adheres to [Semantic Versioning][].
 
 [0.1.0beta]: https://github.com/mishamyrt/mysh/releases/tag/v0.1.0beta
 
-[0.1.0]: https://github.com/mishamyrt/mysh/compare/v0.1.0beta...develop
+[0.1.0]: https://github.com/mishamyrt/mysh/releases/tag/v0.1.0
