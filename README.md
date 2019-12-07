@@ -46,6 +46,14 @@ $ mysh hosts
 - yourcompany:deacon
 ```
 
+Edit `~/.local/share/mysh/global.yaml` to define username for userless hosts.
+
+```
+namespaces:
+  yourcompany:
+    user: mishamyrt
+```
+
 As you can see, all the hosts are prefixed with the namespace. You can enter a hostname with or without a namespace. Usually you need a namespace to avoid collisions.
 
 ```sh
