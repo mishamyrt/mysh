@@ -48,7 +48,7 @@ $ mysh hosts
 
 Edit `~/.local/share/mysh/global.yaml` to define username for userless hosts.
 
-```
+```yaml
 namespaces:
   yourcompany:
     user: mishamyrt
