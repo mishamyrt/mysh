@@ -17,8 +17,8 @@ Mys(s)h — wrapper over SSH, which helps not to clog your head with unnecessary
 ### Ubuntu/Debian
 
 ```sh
-wget https://github.com/mishamyrt/mysh/releases/download/v0.1.0beta/mysh_0.1-0beta-amd64.deb
-sudo apt install ./mysh_0.1-0beta-amd64.deb
+wget https://github.com/mishamyrt/mysh/releases/download/v0.1.0/mysh_0.1-0-amd64.deb
+sudo apt install ./mysh_0.1-0-amd64.deb.deb
 ```
 
 ### macOS
