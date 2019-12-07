@@ -3,7 +3,13 @@
 complete -F _go go
 
 _get_mysh_hosts() {
-    $(compgen -W "$(cat $HOME/.local/share/mysh/completion)" -- "${COMP_WORDS[1]}")
+    hosts="$(cat $HOME/.local/share/mysh/completion 2> /dev/null)"
+    if [ -z "$hosts" ]
+    then
+        echo ""
+    else
+        echo $hosts
+    fi
 }
 
 _mysh_completions()
@@ -12,11 +18,11 @@ _mysh_completions()
   case "${COMP_WORDS[COMP_CWORD-1]}" in
     "mysh")
         cmds="get update help remotes namespaces hosts show version"
-        hosts="$(cat $HOME/.local/share/mysh/completion)"
+        hosts="$(_get_mysh_hosts)"
         COMPREPLY=($(compgen -W "${cmds} ${hosts}" -- ${cur}))
     ;;
     "show")
-        COMPREPLY=($(compgen -W "$(cat $HOME/.local/share/mysh/completion)" -- ${cur}))
+        COMPREPLY=($(compgen -W "$(_get_mysh_hosts)" -- ${cur}))
     ;;
   esac
   return 0
