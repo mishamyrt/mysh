@@ -7,9 +7,17 @@ and this project adheres to [Semantic Versioning][].
 
 ## [0.1.0][] — Unreleased
 
+### Added
+
+-   Configs recreation
+
 ### Fixed
 
 -   Download link
+
+### Removed
+
+-   Debian post-install logic
 
 
 ## [0.1.0beta][] — 2019-12-06

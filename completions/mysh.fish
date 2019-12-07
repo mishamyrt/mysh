@@ -1,5 +1,14 @@
 #/usr/bin/env fish
 
+function _get_mysh_hosts
+    set hosts (cat $HOME/.local/share/mysh/completion 2> /dev/null)
+    if [ -n "$hosts" ]
+        echo $hosts
+    else
+        echo ""
+    end
+end
+
 set -l hosts_subcmds show copy
 
 # get
@@ -39,5 +48,5 @@ complete -c mysh -f -n '__fish_seen_subcommand_from update'
 complete -c mysh -f -n '__fish_use_subcommand' -a version -d 'print Mysh version'
 complete -c mysh -f -n '__fish_seen_subcommand_from version'
 
-complete -c mysh  -n "__fish_seen_subcommand_from $hosts_subcmds" -a (cat $HOME/.local/share/mysh/completion)
-complete -c mysh -f -n '__fish_use_subcommand' -a (cat $HOME/.local/share/mysh/completion)
+complete -c mysh  -n "__fish_seen_subcommand_from $hosts_subcmds" -a (_get_mysh_hosts)
+complete -c mysh -f -n '__fish_use_subcommand' -a (_get_mysh_hosts)
