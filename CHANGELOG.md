@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog][],
 and this project adheres to [Semantic Versioning][].
 
+## [0.1.0][] — 2019-12-07
+
+### Added
+
+-   Configs recreation
+
+### Fixed
+
+-   Empty lists handling
+-   Download link
+
+### Removed
+
+-   Debian post-install logic
+
+
 ## [0.1.0beta][] — 2019-12-06
 
 ### Added
@@ -22,3 +38,5 @@ and this project adheres to [Semantic Versioning][].
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
 
 [0.1.0beta]: https://github.com/mishamyrt/mysh/releases/tag/v0.1.0beta
+
+[0.1.0]: https://github.com/mishamyrt/mysh/releases/tag/v0.1.0

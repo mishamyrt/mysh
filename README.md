@@ -17,7 +17,7 @@ Mys(s)h — wrapper over SSH, which helps not to clog your head with unnecessary
 ### Ubuntu/Debian
 
 ```sh
-wget https://github.com/mishamyrt/mysh/releases/download/0.1.0beta/mysh_0.1-0beta-amd64.deb
+wget https://github.com/mishamyrt/mysh/releases/download/v0.1.0beta/mysh_0.1-0beta-amd64.deb
 sudo apt install ./mysh_0.1-0beta-amd64.deb
 ```
 
@@ -44,6 +44,14 @@ $ mysh hosts
 - yourcompany:mercury
 - yourcompany:may
 - yourcompany:deacon
+```
+
+Edit `~/.local/share/mysh/global.yaml` to define username for userless hosts.
+
+```yaml
+namespaces:
+  yourcompany:
+    user: mishamyrt
 ```
 
 As you can see, all the hosts are prefixed with the namespace. You can enter a hostname with or without a namespace. Usually you need a namespace to avoid collisions.
@@ -83,7 +91,7 @@ $ mysh test
 freddie@mercury:~# 
 ```
 
-[actions-badge]:  https://github.com/mishamyrt/mysh/workflows/Build%20binaries/badge.svg
-[actions]:        https://github.com/mishamyrt/mysh/actions?query=workflow%3A%22Build+binaries%22
+[actions-badge]:  https://github.com/mishamyrt/mysh/workflows/build/badge.svg
+[actions]:        https://github.com/mishamyrt/mysh/actions?query=workflow%3A%22build%22
 [goreport-badge]: https://goreportcard.com/badge/github.com/mishamyrt/mysh
 [goreport]:       https://goreportcard.com/report/github.com/mishamyrt/mysh

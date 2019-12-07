@@ -32,11 +32,9 @@ deb_package: build_linux
 	mkdir $(DEB_FOLDER)/usr/share/fish/vendor_completions.d
 	mkdir $(DEB_FOLDER)/DEBIAN
 	cp cmd/mysh_unix $(DEB_FOLDER)/usr/local/bin/mysh
-	cp debian/control $(DEB_FOLDER)/DEBIAN/control
-	cp debian/postinst $(DEB_FOLDER)/DEBIAN/postinst
+	sed  's/__VERSION__/$(DEB_VERSION)/g' debian/control.template > $(DEB_FOLDER)/DEBIAN/control
 	cp completions/mysh.bash $(DEB_FOLDER)/usr/share/bash-completion/completions/mysh
 	cp completions/mysh.fish $(DEB_FOLDER)/usr/share/fish/vendor_completions.d/mysh
-	chmod +x $(DEB_FOLDER)/DEBIAN/postinst
 	chmod +x $(DEB_FOLDER)/usr/local/bin/*
 	chmod +x $(DEB_FOLDER)/usr/share/bash-completion/completions/mysh
 	chmod +x $(DEB_FOLDER)/usr/share/fish/vendor_completions.d/mysh

@@ -7,6 +7,7 @@ import (
 	"text/tabwriter"
 
 	"github.com/mishamyrt/mysh/v1/pkg/hosts"
+	"github.com/mishamyrt/mysh/v1/pkg/paths"
 	"github.com/mishamyrt/mysh/v1/pkg/remotes"
 	"github.com/mishamyrt/mysh/v1/pkg/ssh"
 )
@@ -73,6 +74,10 @@ func updateRemotes() {
 
 func printRemotes() {
 	remotes := remotes.GetRemotes()
+	if len(remotes.Remotes) == 0 {
+		fmt.Println("No remote namespaces were found")
+		return
+	}
 	fmt.Println("Remote namespaces:")
 	for namespace := range remotes.Remotes {
 		fmt.Printf("- %s\n", namespace)
@@ -81,6 +86,10 @@ func printRemotes() {
 
 func printNamespaces() {
 	namespaces := hosts.GetNamespaces()
+	if len(namespaces) == 0 {
+		fmt.Println("No namespaces were found")
+		return
+	}
 	fmt.Println("Namespaces:")
 	for _, namespace := range namespaces {
 		fmt.Printf("- %s\n", namespace)
@@ -89,6 +98,10 @@ func printNamespaces() {
 
 func printHosts() {
 	hosts, _ := hosts.GetHosts(true)
+	if len(hosts) == 0 {
+		fmt.Println("No hosts were found")
+		return
+	}
 	fmt.Println("Hosts:")
 	for host := range hosts {
 		fmt.Printf("- %s\n", host)
@@ -166,6 +179,7 @@ func copyFile(args []string) {
 }
 
 func main() {
+	paths.PreapreEnvironment()
 	if len(os.Args) == 1 {
 		help()
 		return
