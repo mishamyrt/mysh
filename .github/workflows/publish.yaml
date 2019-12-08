@@ -1,0 +1,36 @@
+name: publish
+
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+
+    - name: Install dependencies
+      run: sudo apt install upx
+
+    - name: Build installers
+      run: make
+
+    - name: Upload results
+      uses: actions/upload-artifact@v1
+      with:
+        name: installers
+        path: dist/
+
+    - name: Publish deb–package
+      env:
+        GITHUB_PAT: ${{ secrets.GITHUB_PAT }}
+      run: |
+        git clone https://mishamyrt:$GITHUB_PAT@github.com/mishamyrt/ppa-mysh.git
+        cp dist/*.deb ppa-mysh/packages
+        cd ppa-mysh/
+        git commit -am "Release $VERSION"
+        git push origin master
+
