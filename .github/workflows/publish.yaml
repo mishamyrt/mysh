@@ -30,6 +30,8 @@ jobs:
       run: |
         # export VERSION="${GITHUB_REF/refs\/tags\/v/}"
         export VERSION="0.1.0"
+        git config --global user.email "misha@myrt.co"
+        git config --global user.name "mishamyrt"
         git clone https://mishamyrt:$GITHUB_PAT@github.com/mishamyrt/ppa-mysh.git
         cp dist/*.deb ppa-mysh/packages
         cd ppa-mysh/
