@@ -14,16 +14,16 @@ Mys(s)h — wrapper over SSH, which helps not to clog your head with unnecessary
 
 ## Installation
 
-### Ubuntu/Debian
+### Ubuntu/Debian [![PPA install test][ppa-test-badge]][ppa-repo]
 
 ```sh
-curl -s --compressed "https://mishamyrt.github.io/ppa-mysh/KEY.gpg" | sudo apt-key add -
-sudo echo "deb https://mishamyrt.github.io/ppa-mysh ./" > /etc/apt/sources.list.d/mysh.list
+curl -s --compressed 'https://mishamyrt.github.io/ppa-mysh/KEY.gpg' | sudo apt-key add -
+sudo add-apt-repository 'deb https://mishamyrt.github.io/ppa-mysh ./'
 sudo apt update
 sudo apt install mysh
 ```
 
-### macOS
+### macOS [![Tap install test][tap-test-badge]][tap-repo]
 
 ```sh
 brew tap mishamyrt/mysh
@@ -97,3 +97,8 @@ freddie@mercury:~#
 [actions]:        https://github.com/mishamyrt/mysh/actions?query=workflow%3A%22build%22
 [goreport-badge]: https://goreportcard.com/badge/github.com/mishamyrt/mysh
 [goreport]:       https://goreportcard.com/report/github.com/mishamyrt/mysh
+[ppa-test-badge]: https://github.com/mishamyrt/ppa-mysh/workflows/PPA%20install/badge.svg
+[ppa-repo]:       https://github.com/mishamyrt/ppa-mysh/
+[tap-test-badge]: https://github.com/mishamyrt/homebrew-mysh/workflows/Tap%20install/badge.svg
+[tap-repo]:       https://github.com/mishamyrt/homebrew-mysh/
+
