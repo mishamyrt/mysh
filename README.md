@@ -51,6 +51,7 @@ hosts:
     user: "john"
 ```
 
+Add the host repository to the mysh.
 
 ```sh
 $ mysh get https://yourcompany.com/hosts/mysh.yaml
