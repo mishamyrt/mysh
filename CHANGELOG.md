@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning][].
 ### Added
 
 -   Debian PPA
+-   Brew tap
+-   Automated releases
 
 ## [0.1.0][] — 2019-12-07
 
