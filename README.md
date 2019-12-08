@@ -32,7 +32,25 @@ brew install mysh
 
 ## How to use
 
-First of all, add the host repository to the mysh.
+First of all, you need a host repository. The repository is a simple `yaml` file.
+
+```yaml
+# The repository must contain the name
+namespace: yourcompany
+
+hosts:
+  mercury:
+    host: "10.10.9.5" # The host is the only mandatory field
+  may:
+    host: "10.10.12.1"
+    port: "2422" 
+  deacon:
+    host: "10.10.0.1"
+    # Additional fields will override the local values
+    port: "1234"
+    user: "john"
+```
+
 
 ```sh
 $ mysh get https://yourcompany.com/hosts/mysh.yaml
@@ -53,7 +71,7 @@ Edit `~/.local/share/mysh/global.yaml` to define username for userless hosts.
 ```yaml
 namespaces:
   yourcompany:
-    user: mishamyrt
+    user: mishamyrt # Fallback username
 ```
 
 As you can see, all the hosts are prefixed with the namespace. You can enter a hostname with or without a namespace. Usually you need a namespace to avoid collisions.
