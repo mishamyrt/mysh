@@ -35,6 +35,7 @@ jobs:
         git clone https://mishamyrt:$GITHUB_PAT@github.com/mishamyrt/ppa-mysh.git
         cp dist/*.deb ppa-mysh/packages
         cd ppa-mysh/
-        git commit -am "Release $VERSION"
+        git add packages/*.deb
+        git commit -m "Release $VERSION"
         git push origin master
 
