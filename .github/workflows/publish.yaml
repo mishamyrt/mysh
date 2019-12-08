@@ -37,4 +37,20 @@ jobs:
         git add packages/*.deb
         git commit -m "Release $VERSION"
         git push origin master
+      
+    - name: Publish brew tap
+      env:
+        GITHUB_PAT: ${{ secrets.GITHUB_PAT }}
+      run: |
+        export VERSION="${GITHUB_REF/refs\/tags\/v/}"
+        export VERSION="0.1.0beta"
+        export FILE_URL="https://github.com/mishamyrt/mysh/releases/download/v${VERSION}/mysh_${VERSION}_darwin_amd64.tar.gz"
+        wget $FILE_URL
+        export FILE_SHA256=$(openssl dgst -sha256 mysh_${VERSION}_darwin_amd64.tar.gz | cut -d'=' -f2)
+        git clone https://mishamyrt:$GITHUB_PAT@github.com/mishamyrt/homebrew-mysh.git
+        cd homebrew-mysh
+        envsubst < mysh.rb.template > Formula/mysh.rb
+        git add Formula/mysh.rb
+        git commit -m "Release $VERSION"
+        git push origin master
 
