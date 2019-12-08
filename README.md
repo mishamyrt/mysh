@@ -102,7 +102,7 @@ And now my favorite: you can put the `.mysh.yaml` file in the project folder, pr
 
 ```yaml
 aliases:
-    test: mercury
+  test: mercury
 ```
 
 Now, being in the folder with this file, you can connect to the host using the alias.
