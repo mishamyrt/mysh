@@ -28,8 +28,7 @@ jobs:
       env:
         GITHUB_PAT: ${{ secrets.GITHUB_PAT }}
       run: |
-        # export VERSION="${GITHUB_REF/refs\/tags\/v/}"
-        export VERSION="0.1.0"
+        export VERSION="${GITHUB_REF/refs\/tags\/v/}"
         git config --global user.email "misha@myrt.co"
         git config --global user.name "mishamyrt"
         git clone https://mishamyrt:$GITHUB_PAT@github.com/mishamyrt/ppa-mysh.git
