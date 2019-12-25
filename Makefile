@@ -17,7 +17,7 @@ all: brew_package deb_package
 brew_package: build_darwin
 	mkdir -p $(DARWIN_FOLDER)
 	cp LICENSE $(DARWIN_FOLDER)/
-	cp cmd/mysh_unix $(DARWIN_FOLDER)/mysh
+	cp entrypoint/mysh_unix $(DARWIN_FOLDER)/mysh
 	cp completions/mysh.bash $(DARWIN_FOLDER)/
 	cp completions/mysh.fish $(DARWIN_FOLDER)/
 	chmod +x $(DARWIN_FOLDER)/*
@@ -31,7 +31,7 @@ deb_package: build_linux
 	mkdir $(DEB_FOLDER)/usr/share/fish
 	mkdir $(DEB_FOLDER)/usr/share/fish/vendor_completions.d
 	mkdir $(DEB_FOLDER)/DEBIAN
-	cp cmd/mysh_unix $(DEB_FOLDER)/usr/local/bin/mysh
+	cp entrypoint/mysh_unix $(DEB_FOLDER)/usr/local/bin/mysh
 	sed  's/__VERSION__/$(DEB_VERSION)/g' debian/control.template > $(DEB_FOLDER)/DEBIAN/control
 	cp completions/mysh.bash $(DEB_FOLDER)/usr/share/bash-completion/completions/mysh
 	cp completions/mysh.fish $(DEB_FOLDER)/usr/share/fish/vendor_completions.d/mysh
@@ -54,7 +54,7 @@ install:
 
 install_Darwin:
 	make uninstall_unix
-	cp -rf cmd/mysh_unix /usr/local/bin/mysh
+	cp -rf entrypoint/mysh_unix /usr/local/bin/mysh
 	cp -rf dist/macOS/mysh_core /usr/local/bin/mysh_core
 	make chmod_unix
 
@@ -74,6 +74,6 @@ uninstall_unix:
 
 install_Linux:
 	make uninstall_unix
-	cp -rf cmd/mysh_unix /usr/local/bin/mysh
+	cp -rf entrypoint/mysh_unix /usr/local/bin/mysh
 	cp -rf dist/linux64/mysh_core /usr/local/bin/mysh_core
 	make chmod_unix

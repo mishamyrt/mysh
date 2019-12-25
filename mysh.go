@@ -179,7 +179,11 @@ func copyFile(args []string) {
 }
 
 func main() {
-	paths.PreapreEnvironment()
+	err := paths.PreapreEnvironment()
+	if err != nil {
+		fmt.Println("Сan't initialize configuration files")
+		os.Exit(1)
+	}
 	if len(os.Args) == 1 {
 		help()
 		return
