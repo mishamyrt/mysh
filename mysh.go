@@ -153,7 +153,7 @@ func getRSyncFile(filePath string) (string, error) {
 }
 
 func copyFile(args []string) {
-	usage := "\tmysh copy <source host>:<file> <target host>:<file>"
+	usage := "\tmysh copy [args] <source host>:<file> <target host>:<file>"
 	pathOffset := 2
 	rsyncArgs := "av8h"
 	if args[2][0:1] == "-" {
