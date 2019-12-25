@@ -19,7 +19,6 @@ Mys(s)h — wrapper over SSH, which helps not to clog your head with unnecessary
 ```sh
 curl -s --compressed 'https://mishamyrt.github.io/ppa-mysh/KEY.gpg' | sudo apt-key add -
 sudo add-apt-repository 'deb https://mishamyrt.github.io/ppa-mysh ./'
-sudo apt update
 sudo apt install mysh
 ```
 
