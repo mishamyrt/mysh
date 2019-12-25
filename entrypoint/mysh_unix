@@ -5,7 +5,7 @@ import sys
 core_path = 'core_mysh'
 stream = os.popen(core_path + ' ' + ' '.join(sys.argv[1:]))
 output = stream.read()
-if ('ssh ' in output or 'scp ' in output):
+if ('ssh ' in output or 'rsync ' in output):
     os.system(output)
 else:
     print(output.rstrip("\n"))
