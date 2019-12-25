@@ -14,6 +14,10 @@ and this project adheres to [Semantic Versioning][].
 -   Automated releases
 -   Repository example
 
+### Changed
+
+-   `copy` now uses `rsync` instead of `scp`
+
 ## [0.1.0][] — 2019-12-07
 
 ### Added
