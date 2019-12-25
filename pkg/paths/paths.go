@@ -41,8 +41,8 @@ var HostsDirectory = path.Join(MyshDirectory, "hosts")
 func PreapreEnvironment() error {
 	var remotesConfig types.RemotesList
 	var globalConfig types.GlobalConfig
-	if _, err := os.Stat(MyshDirectory); os.IsNotExist(err) {
-		os.MkdirAll(MyshDirectory, os.ModePerm)
+	if _, err := os.Stat(HostsDirectory); os.IsNotExist(err) {
+		os.MkdirAll(HostsDirectory, os.ModePerm)
 	}
 	err := createIfNotExists(RemotesList, remotesConfig)
 	err = createIfNotExists(GlobalConfig, globalConfig)
