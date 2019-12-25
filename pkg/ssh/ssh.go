@@ -22,7 +22,11 @@ func BuildSSHCommand(hostConfig types.Host) (string, error) {
 	}
 	user := fallbackIfEmpty(hostConfig.User, os.Getenv("USER"))
 	port := fallbackIfEmpty(hostConfig.Port, "22")
-	return fmt.Sprintf("ssh %s@%s -p %s", user, hostConfig.Host, port), nil
+	sshString := fmt.Sprintf("ssh %s@%s -p %s", user, hostConfig.Host, port)
+	if len(hostConfig.Key) > 0 {
+		sshString += fmt.Sprintf(" -i %s", hostConfig.Key)
+	}
+	return sshString, nil
 }
 
 // BuildRSyncPath builds part of rsync command

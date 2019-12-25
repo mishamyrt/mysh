@@ -29,8 +29,8 @@ type LocalConfig struct {
 
 // Host is basic SSH connection config
 type Host struct {
-	Host       string
-	Port, User string `yaml:",omitempty"`
+	Host            string
+	Port, User, Key string `yaml:",omitempty"`
 }
 
 // RemoteFile is a combination of file path and host
