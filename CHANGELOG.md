@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning][].
 -   Brew tap
 -   Automated releases
 -   Repository example
+-   Private key handling
 
 ### Changed
 
