@@ -25,15 +25,15 @@ func BuildSSHCommand(hostConfig types.Host) (string, error) {
 	return fmt.Sprintf("ssh %s@%s -p %s", user, hostConfig.Host, port), nil
 }
 
-// BuildSCPPath builds part of scp command
-func BuildSCPPath(remoteFile types.RemoteFile) (string, error) {
+// BuildRSyncPath builds part of rsync command
+func BuildRSyncPath(remoteFile types.RemoteFile) (string, error) {
 	if len(remoteFile.Host.Host) == 0 {
 		return "", errors.New("Empty host passed")
 	}
 	user := fallbackIfEmpty(remoteFile.Host.User, os.Getenv("USER"))
 	port := fallbackIfEmpty(remoteFile.Host.Port, "22")
 	return fmt.Sprintf(
-		"-P %s %s@%s:%s",
+		"--rsh='ssh -p%s' %s@%s:%s",
 		port, user, remoteFile.Host.Host, remoteFile.FilePath,
 	), nil
 }

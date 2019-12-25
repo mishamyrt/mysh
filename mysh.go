@@ -145,15 +145,21 @@ func showHost(args []string) {
 	}
 }
 
-func getSCPFile(filePath string) (string, error) {
+func getRSyncFile(filePath string) (string, error) {
 	if strings.Contains(filePath, ":") {
-		return ssh.BuildSCPPath(hosts.MatchRemoteFile(filePath))
+		return ssh.BuildRSyncPath(hosts.MatchRemoteFile(filePath))
 	}
 	return filePath, nil
 }
 
 func copyFile(args []string) {
-	usage := "\tmysh copy <source host>:<file> <target host>:<file>"
+	usage := "\tmysh copy [args] <source host>:<file> <target host>:<file>"
+	pathOffset := 2
+	rsyncArgs := "av8h"
+	if args[2][0:1] == "-" {
+		pathOffset++
+		rsyncArgs += args[2][1:len(args[2])]
+	}
 	var source string
 	var target string
 	if len(args) < 3 {
@@ -165,17 +171,17 @@ func copyFile(args []string) {
 		fmt.Println(usage)
 		return
 	}
-	source, err := getSCPFile(args[2])
+	source, err := getRSyncFile(args[pathOffset])
 	if err != nil {
-		fmt.Println("Source host not provided. Usage:")
+		fmt.Println("Source not provided. Usage:")
 		fmt.Println(usage)
 	}
-	target, err = getSCPFile(args[3])
+	target, err = getRSyncFile(args[pathOffset+1])
 	if err != nil {
-		fmt.Println("Target host not provided. Usage:")
+		fmt.Println("Target not provided. Usage:")
 		fmt.Println(usage)
 	}
-	fmt.Printf("scp %s %s\n", source, target)
+	fmt.Printf("rsync -%s %s %s\n", rsyncArgs, source, target)
 }
 
 func main() {
