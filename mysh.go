@@ -117,7 +117,20 @@ func version() {
 }
 
 func connect(args []string) {
-	host, _ := hosts.MatchHost(args[1], false)
+	var privateKey string
+	var hostString string
+	for i := 0; i < len(args); i++ {
+		if args[i] == "-i" {
+			privateKey = args[i+1]
+			i++
+		} else {
+			hostString = args[i]
+		}
+	}
+	host, _ := hosts.MatchHost(hostString, false)
+	if len(privateKey) > 0 {
+		host.Key = privateKey
+	}
 	command, err := ssh.BuildSSHCommand(host)
 	if err != nil {
 		panic(err)
