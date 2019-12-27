@@ -9,43 +9,44 @@ and this project adheres to [Semantic Versioning][].
 
 ### Added
 
--   Debian PPA
--   Brew tap
--   Automated releases
--   Repository example
--   Private key handling
+-   Debian PPA.
+-   Brew tap.
+-   Automated releases.
+-   Repository example.
+-   Private key handling.
 
 ### Changed
 
--   `copy` now uses `rsync` instead of `scp`
+-   `copy` now uses `rsync` instead of `scp`.
+-   Switched to `cobra` to get better UX and DX.
 
 ## [0.1.0][] — 2019-12-07
 
 ### Added
 
--   Configs recreation
+-   Configs recreation.
 
 ### Fixed
 
--   Empty lists handling
--   Download link
+-   Empty lists handling.
+-   Download link.
 
 ### Removed
 
--   Debian post-install logic
+-   Debian post-install logic.
 
 
 ## [0.1.0beta][] — 2019-12-06
 
 ### Added
 
--   Remote Hosts download
--   Remote Hosts update
--   SSH connect
--   Local aliases
--   Bash and Fish complitions
--   `show` command
--   `copy` command
+-   Remote Hosts download.
+-   Remote Hosts update.
+-   SSH connect.
+-   Local aliases.
+-   Bash and Fish complitions.
+-   `show` command.
+-   `copy` command.
 
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 

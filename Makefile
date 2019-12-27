@@ -2,7 +2,8 @@ VERSION := $(shell cat CHANGELOG.md | grep -m 1 "\#\#"  | cut -d' ' -f2 | cut -d
 UNAME := $(shell uname)
 DATE := $(shell date)
 GIT_COMMIT := $(shell git rev-list -1 HEAD)
-LD_FLAGS=-s -w -X "main.GitCommit=$(GIT_COMMIT)" -X "main.Version=$(VERSION)" -X "main.BuildTime=$(DATE)"
+CMD_PACKAGE = github.com/mishamyrt/mysh/v1/cmd
+LD_FLAGS=-s -w -X "$(CMD_PACKAGE).GitCommit=$(GIT_COMMIT)" -X "$(CMD_PACKAGE).Version=$(VERSION)" -X "$(CMD_PACKAGE).BuildTime=$(DATE)"
 BUILD_CMD=go build -ldflags='$(LD_FLAGS)'
 
 DEB_VERSION := $(shell echo "$(VERSION)" | sed 's/\(.*\)\./\1-/')
