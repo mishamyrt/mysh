@@ -20,9 +20,9 @@ func printHost(host types.Host) {
 	}
 }
 
-func printHosts(hosts map[string]types.Host) {
+func printHosts(hostList map[string]types.Host) {
 	fmt.Println("Hosts:")
-	for host := range hosts {
+	for host := range hostList {
 		fmt.Printf("- %s\n", host)
 	}
 }

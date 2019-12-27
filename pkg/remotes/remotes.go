@@ -36,13 +36,14 @@ func GetRemotes() types.RemotesList {
 	return remotesList
 }
 
-func saveRemoteNamespace(namespaceName string, url string) error {
+func saveRemoteNamespace(namespaceName, url string) (err error) {
 	remotesList := GetRemotes()
 	if _, ok := remotesList.Remotes[namespaceName]; ok {
 		return nil
 	}
 	remotesList.Remotes[namespaceName] = url
-	return yaml.WriteFile(paths.RemotesList, &remotesList)
+	err = yaml.WriteFile(paths.RemotesList, &remotesList)
+	return err
 }
 
 func downloadConfig(url string) (string, error) {
@@ -71,7 +72,7 @@ func GetConfig(url string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	saveRemoteNamespace(namespaceName, url)
+	err = saveRemoteNamespace(namespaceName, url)
 	return namespaceName, err
 }
 

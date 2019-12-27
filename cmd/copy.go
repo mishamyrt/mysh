@@ -50,7 +50,8 @@ func identifyPath(path string) (types.RSyncFile, error) {
 	var file types.RSyncFile
 	file.IsRemote = isHostPath(path)
 	if file.IsRemote {
-		path, err := ssh.BuildRSyncPath(hosts.MatchRemoteFile(path))
+		pathMatch := hosts.MatchRemoteFile(path)
+		path, err := ssh.BuildRSyncPath(&pathMatch)
 		file.Path = path
 		return file, err
 	}
