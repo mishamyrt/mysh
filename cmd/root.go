@@ -1,8 +1,10 @@
 package cmd
 
 import (
+	"errors"
 	"fmt"
 	"os"
+	"strconv"
 
 	"github.com/mishamyrt/mysh/v1/pkg/hosts"
 	"github.com/mishamyrt/mysh/v1/pkg/paths"
@@ -10,38 +12,38 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func connect(args []string) {
-	var privateKey string
-	var hostString string
-	for i := 0; i < len(args); i++ {
-		if args[i] == "-i" {
-			privateKey = args[i+1]
-			i++
-		} else {
-			hostString = args[i]
-		}
-	}
-	host, _ := hosts.MatchHost(hostString, false)
-	if len(privateKey) > 0 {
-		host.Key = privateKey
-	}
-	command, err := ssh.BuildSSHCommand(host)
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println(command)
-}
-
 var (
-	rootCmd = &cobra.Command{
+	port     int
+	identity string
+	rootCmd  = &cobra.Command{
 		Use:   "mysh <host>",
 		Short: "Mysh is a tool for improving SSH user experience",
 		Long:  `Mys(s)h — wrapper over SSH, which helps not to clog your head with unnecessary things. In Mysh, you can specify a remote repository with SSH hosts and connect to it by knowing only the name.`,
-		Run: func(cmd *cobra.Command, args []string) {
-			fmt.Println(args)
+		Args: func(cmd *cobra.Command, args []string) error {
+			if len(args) != 1 {
+				return errors.New("only host is required")
+			}
+			return nil
 		},
+		Run: func(cmd *cobra.Command, args []string) {
+			host, _ := hosts.MatchHost(args[0], false)
+			if len(identity) > 0 {
+				host.Key = identity
+			}
+			if port != 0 {
+				host.Port = strconv.Itoa(port)
+			}
+			command, _ := ssh.BuildSSHCommand(host)
+			fmt.Println(command)
+		},
+		TraverseChildren: true,
 	}
 )
+
+func init() {
+	rootCmd.Flags().IntVarP(&port, "port", "p", 0, "host port")
+	rootCmd.Flags().StringVarP(&identity, "identity", "i", "", "identity file")
+}
 
 // Execute is
 func Execute() {
