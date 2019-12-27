@@ -81,23 +81,6 @@ var getCmd = &cobra.Command{
 	},
 }
 
-// func getRemote(args []string) {
-// if len(args) < 3 {
-// 	fmt.Println("Can't load repository. URL not provided. Usage:")
-// 	fmt.Println("\tmysh get <url>")
-// 	return
-// }
-// namespaceName, err := remotes.GetConfig(args[2])
-// if err != nil {
-// 	return
-// }
-// fmt.Printf("'%s' repository successfully added\n", namespaceName)
-// err = hosts.BuildCompletionList()
-// if err != nil {
-// 	fmt.Println("Could not update shell completion")
-// }
-// }
-
 func noArgumentValidator(cmd *cobra.Command, args []string) error {
 	if len(args) > 0 {
 		return errors.New("no argument is required")
