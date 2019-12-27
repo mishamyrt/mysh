@@ -8,32 +8,37 @@ import (
 	"github.com/mishamyrt/mysh/v1/pkg/types"
 )
 
-func fallbackIfEmpty(value string, fallback string) string {
+func fallbackIfEmpty(value, fallback string) string {
 	if len(value) > 0 {
 		return value
 	}
+
 	return fallback
 }
 
 // BuildSSHCommand builds command for SSH
 func BuildSSHCommand(hostConfig types.Host) (string, error) {
 	if len(hostConfig.Host) == 0 {
-		return "", errors.New("Empty host passed")
+		return "", errors.New("empty host passed")
 	}
 	user := fallbackIfEmpty(hostConfig.User, os.Getenv("USER"))
 	port := fallbackIfEmpty(hostConfig.Port, "22")
-	return fmt.Sprintf("ssh %s@%s -p %s", user, hostConfig.Host, port), nil
+	sshString := fmt.Sprintf("ssh %s@%s -p %s", user, hostConfig.Host, port)
+	if len(hostConfig.Key) > 0 {
+		sshString += fmt.Sprintf(" -i %s", hostConfig.Key)
+	}
+	return sshString, nil
 }
 
-// BuildSCPPath builds part of scp command
-func BuildSCPPath(remoteFile types.RemoteFile) (string, error) {
+// BuildRSyncPath builds part of rsync command
+func BuildRSyncPath(remoteFile *types.RemoteFile) (string, error) {
 	if len(remoteFile.Host.Host) == 0 {
-		return "", errors.New("Empty host passed")
+		return "", errors.New("empty host passed")
 	}
 	user := fallbackIfEmpty(remoteFile.Host.User, os.Getenv("USER"))
 	port := fallbackIfEmpty(remoteFile.Host.Port, "22")
 	return fmt.Sprintf(
-		"-P %s %s@%s:%s",
+		"--rsh='ssh -p%s' %s@%s:%s",
 		port, user, remoteFile.Host.Host, remoteFile.FilePath,
 	), nil
 }

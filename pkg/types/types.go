@@ -7,6 +7,12 @@ type HostNameParts struct {
 	Namespace string
 }
 
+// RSyncFile is description of rsync target file
+type RSyncFile struct {
+	IsRemote bool
+	Path     string
+}
+
 // RemotesList is list with namespace keys and URL values
 type RemotesList struct {
 	Remotes map[string]string
@@ -29,8 +35,8 @@ type LocalConfig struct {
 
 // Host is basic SSH connection config
 type Host struct {
-	Host       string
-	Port, User string `yaml:",omitempty"`
+	Host            string
+	Port, User, Key string `yaml:",omitempty"`
 }
 
 // RemoteFile is a combination of file path and host

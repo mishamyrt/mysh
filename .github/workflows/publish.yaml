@@ -1,0 +1,55 @@
+name: publish
+
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+
+    - name: Install dependencies
+      run: sudo apt install upx
+
+    - name: Build installers
+      run: make
+
+    - name: Upload results
+      uses: actions/upload-artifact@v1
+      with:
+        name: installers
+        path: dist/
+
+    - name: Publish deb–package
+      env:
+        GITHUB_PAT: ${{ secrets.GITHUB_PAT }}
+      run: |
+        export VERSION="${GITHUB_REF/refs\/tags\/v/}"
+        git config --global user.email "misha@myrt.co"
+        git config --global user.name "mishamyrt"
+        git clone https://mishamyrt:$GITHUB_PAT@github.com/mishamyrt/ppa-mysh.git
+        cp dist/*.deb ppa-mysh/packages
+        cd ppa-mysh/
+        git add packages/*.deb
+        git commit -m "Release $VERSION"
+        git push origin master
+      
+    - name: Publish brew tap
+      env:
+        GITHUB_PAT: ${{ secrets.GITHUB_PAT }}
+      run: |
+        export VERSION="${GITHUB_REF/refs\/tags\/v/}"
+        export FILE_URL="https://github.com/mishamyrt/mysh/releases/download/v${VERSION}/mysh_${VERSION}_darwin_amd64.tar.gz"
+        wget $FILE_URL
+        export FILE_SHA256=$(openssl dgst -sha256 mysh_${VERSION}_darwin_amd64.tar.gz | cut -d'=' -f2)
+        git clone https://mishamyrt:$GITHUB_PAT@github.com/mishamyrt/homebrew-mysh.git
+        cd homebrew-mysh
+        envsubst < mysh.rb.template > Formula/mysh.rb
+        git add Formula/mysh.rb
+        git commit -m "Release $VERSION"
+        git push origin master
+

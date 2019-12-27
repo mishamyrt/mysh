@@ -14,14 +14,15 @@ Mys(s)h — wrapper over SSH, which helps not to clog your head with unnecessary
 
 ## Installation
 
-### Ubuntu/Debian
+### Ubuntu/Debian [![PPA install test][ppa-test-badge]][ppa-repo]
 
 ```sh
-wget https://github.com/mishamyrt/mysh/releases/download/v0.1.0beta/mysh_0.1-0beta-amd64.deb
-sudo apt install ./mysh_0.1-0beta-amd64.deb
+curl -s --compressed 'https://mishamyrt.github.io/ppa-mysh/KEY.gpg' | sudo apt-key add -
+sudo add-apt-repository 'deb https://mishamyrt.github.io/ppa-mysh ./'
+sudo apt install mysh
 ```
 
-### macOS
+### macOS [![Tap install test][tap-test-badge]][tap-repo]
 
 ```sh
 brew tap mishamyrt/mysh
@@ -30,7 +31,26 @@ brew install mysh
 
 ## How to use
 
-First of all, add the host repository to the mysh.
+First of all, you need a host repository. The repository is a simple `yaml` file.
+
+```yaml
+# The repository must contain the name
+namespace: yourcompany
+
+hosts:
+  mercury:
+    host: "10.10.9.5" # The host is the only mandatory field
+  may:
+    host: "10.10.12.1"
+    port: "2422" 
+  deacon:
+    host: "10.10.0.1"
+    # Additional fields will override the local values
+    port: "1234"
+    user: "john"
+```
+
+Add the host repository to the mysh.
 
 ```sh
 $ mysh get https://yourcompany.com/hosts/mysh.yaml
@@ -51,7 +71,7 @@ Edit `~/.local/share/mysh/global.yaml` to define username for userless hosts.
 ```yaml
 namespaces:
   yourcompany:
-    user: mishamyrt
+    user: mishamyrt # Fallback username
 ```
 
 As you can see, all the hosts are prefixed with the namespace. You can enter a hostname with or without a namespace. Usually you need a namespace to avoid collisions.
@@ -81,7 +101,7 @@ And now my favorite: you can put the `.mysh.yaml` file in the project folder, pr
 
 ```yaml
 aliases:
-    test: mercury
+  test: mercury
 ```
 
 Now, being in the folder with this file, you can connect to the host using the alias.
@@ -95,3 +115,8 @@ freddie@mercury:~#
 [actions]:        https://github.com/mishamyrt/mysh/actions?query=workflow%3A%22build%22
 [goreport-badge]: https://goreportcard.com/badge/github.com/mishamyrt/mysh
 [goreport]:       https://goreportcard.com/report/github.com/mishamyrt/mysh
+[ppa-test-badge]: https://github.com/mishamyrt/ppa-mysh/workflows/PPA%20install/badge.svg
+[ppa-repo]:       https://github.com/mishamyrt/ppa-mysh/
+[tap-test-badge]: https://github.com/mishamyrt/homebrew-mysh/workflows/Tap%20install/badge.svg
+[tap-repo]:       https://github.com/mishamyrt/homebrew-mysh/
+
