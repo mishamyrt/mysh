@@ -18,7 +18,8 @@ var (
 	rootCmd  = &cobra.Command{
 		Use:   "mysh <host>",
 		Short: "Mysh is a tool for improving SSH user experience",
-		Long:  `Mys(s)h — wrapper over SSH, which helps not to clog your head with unnecessary things. In Mysh, you can specify a remote repository with SSH hosts and connect to it by knowing only the name.`,
+		Long: "Mys(s)h — wrapper over SSH, which helps not to clog your head with unnecessary things. " +
+			"In Mysh, you can specify a remote repository with SSH hosts and connect to it by knowing only the name.",
 		Args: func(cmd *cobra.Command, args []string) error {
 			if len(args) != 1 {
 				return errors.New("only host is required")
