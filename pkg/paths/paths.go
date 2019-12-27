@@ -14,9 +14,9 @@ func getHomeDir() string {
 	return usr.HomeDir
 }
 
-func createIfNotExists(path string, data interface{}) error {
-	if _, err := os.Stat(path); os.IsNotExist(err) {
-		return yaml.WriteFile(path, &data)
+func createIfNotExists(filePath string, data interface{}) error {
+	if _, err := os.Stat(filePath); os.IsNotExist(err) {
+		return yaml.WriteFile(filePath, &data)
 	}
 	return nil
 }

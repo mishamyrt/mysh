@@ -61,11 +61,11 @@ func BuildCompletionList() error {
 }
 
 // GetHosts returns final map of hosts
-func GetHosts(stripOrig bool) (map[string]types.Host, []string) {
-	hostMap := make(map[string]types.Host)
+func GetHosts(stripOrig bool) (hostMap map[string]types.Host, namespaces []string) {
+	hostMap = make(map[string]types.Host)
 	config := readGlobalConfig(paths.GlobalConfig)
 	hosts, _ := filepath.Glob(path.Join(paths.HostsDirectory, "*"))
-	namespaces := make([]string, len(hosts))
+	namespaces = make([]string, len(hosts))
 	for _, filePath := range hosts {
 		host := readNamespaceHosts(filePath)
 		if !stripOrig {
