@@ -68,7 +68,7 @@ func GetHosts(stripOrig bool) (map[string]types.Host, []string) {
 	var namespaces []string
 	for _, filePath := range hosts {
 		host := readNamespaceHosts(filePath)
-		if stripOrig == false {
+		if !stripOrig {
 			for key, value := range host.Hosts {
 				hostMap[key] = value
 			}

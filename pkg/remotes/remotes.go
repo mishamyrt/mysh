@@ -71,7 +71,7 @@ func GetConfig(url string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	saveRemoteNamespace(namespaceName, url)
+	err = saveRemoteNamespace(namespaceName, url)
 	return namespaceName, err
 }
 
