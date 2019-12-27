@@ -1,0 +1,6 @@
+linters-settings:
+    gocritic:
+        enabled-tags:
+        - performance
+        - diagnostic
+        - opinionated
