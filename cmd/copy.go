@@ -89,7 +89,7 @@ var (
 		Run: func(cmd *cobra.Command, args []string) {
 			rsyncFlags += getFlags(args)
 			if source.IsRemote && target.IsRemote {
-				fmt.Println("Not implemented :(")
+				fmt.Println("host to host copy is not implemented yet:(")
 				return
 			}
 			fmt.Printf("rsync -%s %s %s\n", rsyncFlags, source.Path, target.Path)
