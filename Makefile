@@ -16,7 +16,7 @@ LINUX_BINARY=$(DEB_FOLDER)/usr/local/bin/core_mysh
 all: brew_package deb_package
 
 lint:
-	golangci-lint run
+	golangci-lint run -E lll -E misspell -E prealloc -E stylecheck -E gocritic
 
 brew_package: build_darwin
 	mkdir -p $(DARWIN_FOLDER)
